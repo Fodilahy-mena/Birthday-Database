@@ -1,16 +1,55 @@
 
+
 const tbody = document.querySelector('tbody');
+const tr = document.querySelector('tr');
 // async await function for the Promis to go
 
 async function go() {
+    async function fetchPeople() {
     const response = await fetch("./people.json");
     // a response variable and await it with fetched variable
-
     const people = await response.json();
-    console.log(people);
-    let sortedPeople = people.sort(function(a, b) {return b.birthday - a.birthday;});
+    return people;
+    // console.log(people);
+    }
+
+    // save to local storage
+    async function saveToLocalStorage() {
+        const save = await fetchPeople();
+        // console.log(save);
+        JSON.parse(localStorage.getItem('save'));
+        tr.dispatchEvent(new CustomEvent('updatePeopleList'));
+    }
+
+    async function updateToLocalStorage() {
+        const save = await fetchPeople();
+        localStorage.setItem('save', JSON.stringify(save));
+        tr.dispatchEvent(new CustomEvent('updatePeopleList'));
+    }
+    async function displayPeople() {
+        const displayFetch = await fetchPeople();
+    let sortedPeople = displayFetch.sort(function(a, b) {return b.birthday - a.birthday;});
     
-    const displayList = data => {tbody.innerHTML = data.map((person, index) => {
+    const displayList = data => {
+        tbody.innerHTML = data
+        .map((person, index) => {
+            function nth(day) {
+                if(day > 3 && day < 21) return 'th';
+                switch(day % 10) {
+                    case 1: return "st";
+                    case 2: return "nd";
+                    case 3: return "rd";
+                    default: return "th";
+                }
+            }
+            let timestamp_to_date = new Date(person.birthday);
+            const date = timestamp_to_date.getDate();
+
+            const month = ["January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+            ][timestamp_to_date.getMonth()];
+            let today = new Date();
+            let age = today.getFullYear() - timestamp_to_date.getFullYear();
         return`
         <tr data-id="${person.id}"  class="${index % 2 ? 'even' : 'odds'}">
             <th scope="row">
@@ -18,9 +57,9 @@ async function go() {
             </th>
             <td>
                 <span>${person.firstName} ${person.lastName}</span><br>
-                <strong>${new Date(person.birthday)}</strong>
+                <strong>Turns ${age} on ${month} ${date}<sup>${nth(date)}</sup></strong>
             </td>
-            <td>${new Date(person.birthday)}</td>
+            <td>Days</td>
             <td>
                 <button class="edit">
                     <img src="./edit.png" width="35"/>
@@ -34,7 +73,8 @@ async function go() {
 		</tr>
         `;
     }).join('');
-}
+    }
+
     // tbody.innerHTML = html;
 
     const editBirthday = (e) => {
@@ -112,11 +152,7 @@ async function go() {
                 resolve(e.currentTarget.remove());
             	destroyPopup(popupEditeList);
                 
-            }, { once: true }
-            
-            );
-            
-            
+            }, { once: true });
         resolve(document.body.appendChild(popupEditeList));
         popupEditeList.classList.add('open');
         
@@ -157,6 +193,7 @@ async function go() {
                 sortedPeople = deletePersonBirthday;
                 displayList(deletePersonBirthday);
                 destroyPopup(popupDeleteList);
+                console.log(sortedPeople);
                 }
             }, { once: true });
             
@@ -177,8 +214,13 @@ async function go() {
 
 
     displayList(sortedPeople);
+    tr.addEventListener('updatePeopleList', saveToLocalStorage);
     window.addEventListener('click', editBirthday);
     window.addEventListener('click', deleteBirthday);
+    updateToLocalStorage();
+}
+displayPeople();
+
 };
 
 go();
