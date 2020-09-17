@@ -1,36 +1,132 @@
 
-
 const tbody = document.querySelector('tbody');
 const tr = document.querySelector('tr');
-// async await function for the Promis to go
 
+function wait(ms = 0) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+// Call this destroyPopup function whenever the user wants to skip the popup
+async function destroyPopup(popup) {
+    popup.classList.remove('open');
+    await wait(1000);
+
+    // remove the popup from the DOM
+    popup.remove();
+
+    // remove it from the js memory
+    popup = null;
+}
+
+// async await function for the Promis to go
 async function go() {
     async function fetchPeople() {
     const response = await fetch("./people.json");
     // a response variable and await it with fetched variable
-    const people = await response.json();
-    return people;
+    const data = await response.json();
+    return data;
     // console.log(people);
     }
 
-    // save to local storage
-    async function saveToLocalStorage() {
-        const save = await fetchPeople();
-        // console.log(save);
-        JSON.parse(localStorage.getItem('save'));
-        tr.dispatchEvent(new CustomEvent('updatePeopleList'));
-    }
+    
 
-    async function updateToLocalStorage() {
-        const save = await fetchPeople();
-        localStorage.setItem('save', JSON.stringify(save));
-        tr.dispatchEvent(new CustomEvent('updatePeopleList'));
-    }
     async function displayPeople() {
         const displayFetch = await fetchPeople();
     let sortedPeople = displayFetch.sort(function(a, b) {return b.birthday - a.birthday;});
+
+    console.log("Sorted",sortedPeople);
+
+    // save to local storage
+
+    // update the local storage when there is any change
+    function updateToLocalStorage() {
+        // const save = people;
+        localStorage.setItem('data', JSON.stringify(data));
+    }
+
+    function saveToLocalStorage() {
+        const saveBirtdayList = JSON.parse(localStorage.getItem('data'));
+        if(saveBirtdayList) {
+            data = saveBirtdayList;
+            displayList(data);
+        }
+        tr.dispatchEvent(new CustomEvent('updatePeopleList'));
+    }
+    
+
+
+        // add a birthday
+const handleAddBirthday = (e) => {
+    if (e.target.closest('button.add')) {
+        addBirthday();
+    }
+}
+const addBirthday = () => {
+    const  birthdayToAdd = sortedPeople;
+        console.log(birthdayToAdd);
+        return new Promise(async function(resolve) {
+        
+        console.log('Add button');
+        const popupAddList = document.createElement('form');
+        popupAddList.classList.add('popup');
+        popupAddList.classList.add('open');
+        popupAddList.insertAdjacentHTML(
+            'afterbegin', 
+            `<fieldset>
+                <label>Enter first name</label>
+                <input type="text" value="" name="first">
+                <label>Enter last name</label>
+                <input type="text" value="" name="last">
+                <label>Enter your birthday date</label>
+                <input type="date" value="" name="date">
+                <label>Avatar image</label>
+                <input type="text" value="" name="picUrl">
+                <div class="options-btn">
+                    <button type="button" class="cancel" name="cancel">Cancel</button>
+                    <button type="submit" class="submit_form">Submit</button>
+                </div>
+            </fieldset>
+        `);
+
+        if(popupAddList.cancel) {
+            const cancelButton = popupAddList.cancel;
+            console.log("Canceled",cancelButton);
+            cancelButton.addEventListener('click', () => {
+                resolve(null);
+                destroyPopup(popupAddList);
+                
+            }, { once: true });
+        }
+
+        popupAddList.addEventListener('submit', (e) => {
+            e.preventDefault();
+            console.log("submit form");
+            const formEl = e.currentTarget;
+            const newBirthdayList = {
+                birthday: formEl.date.value,
+                lastName: formEl.last.value,
+                firstName: formEl.first.value,
+                picture: formEl.picUrl.value,
+                id: Date.now(),
+            };
+            
+            console.log(newBirthdayList);
+            displayFetch.push(newBirthdayList);
+            tr.dispatchEvent(new CustomEvent('updatePeopleList'));
+            formEl.reset();
+            displayList(sortedPeople);
+            destroyPopup(popupAddList);
+            
+        }, { once: true });
+        console.log(popupAddList);
+        resolve(document.body.appendChild(popupAddList));
+    });
+
+}
+
     
     const displayList = data => {
+        console.log("data is an", data);
         tbody.innerHTML = data
         .map((person, index) => {
             function nth(day) {
@@ -75,7 +171,6 @@ async function go() {
     }).join('');
     }
 
-    // tbody.innerHTML = html;
 
     const editBirthday = (e) => {
         if (e.target.closest('button.edit')) {
@@ -93,24 +188,8 @@ async function go() {
         }
     }
     
-    function wait(ms = 0) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    }
-    
-    async function destroyPopup(popup) {
-        popup.classList.remove('open');
-        await wait(1000);
-    
-        // remove the popup from the DOM
-        popup.remove();
-    
-        // remove it from the js memory
-        popup = null;
-    }
-    
     const editBirthdayPopup = (id) => {
-        // const birthdayToEdit = sortedPeople.find(person => person.id === idToEdit);
-        const  birthdayToEdit = sortedPeople.find(person => person.id === id);
+        const  birthdayToEdit = sortedPeople.find(person => person.id == id);
         console.log(birthdayToEdit);
         return new Promise(async function(resolve) {
     
@@ -124,7 +203,7 @@ async function go() {
                     <label>First name</label>
                     <input type="text" value="${birthdayToEdit.lastName}" name="firstName">
                     <label>Birthday (datepicker)</label>
-                    <input type="text" value="${new Date(birthdayToEdit.birthday)}" name="birthday">
+                    <input type="date" value="${birthdayToEdit.birthday}" name="birthday">
                     <label>Avatar image</label>
                     <input type="url" value="${birthdayToEdit.picture}" name="avatarUrl">
                     <div class="options-btn">
@@ -160,7 +239,7 @@ async function go() {
     };
 
     const deleteBirthdayPopup =(id) => {
-        const  birthdayToDelete = sortedPeople.find(person => person.id === id);
+        const  birthdayToDelete = sortedPeople.find(person => person.id == id);
         return new Promise(async function(resolve) {
             const popupDeleteList = document.createElement('form');
             popupDeleteList.classList.add('popup');
@@ -189,8 +268,9 @@ async function go() {
             popupDeleteList.addEventListener('click', (e) => {
                 e.preventDefault();
                 if(e.target.closest('button.confirmed')) {
-                let deletePersonBirthday = sortedPeople.filter(person => person.id !== id);
+                let deletePersonBirthday = sortedPeople.filter(person => person.id != id);
                 sortedPeople = deletePersonBirthday;
+                console.log(deletePersonBirthday);
                 displayList(deletePersonBirthday);
                 destroyPopup(popupDeleteList);
                 console.log(sortedPeople);
@@ -209,10 +289,10 @@ async function go() {
             resolve(document.body.appendChild(popupDeleteList));
 	
 	        popupDeleteList.classList.add('open');
-        });       
+        });  
     }
 
-
+    window.addEventListener('click', handleAddBirthday);
     displayList(sortedPeople);
     tr.addEventListener('updatePeopleList', saveToLocalStorage);
     window.addEventListener('click', editBirthday);

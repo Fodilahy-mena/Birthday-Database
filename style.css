@@ -122,3 +122,30 @@ input {
 	font-weight: 700;
 	color: goldenrod;
 }
+
+.btn-primary {
+	margin-block-end: 1rem;
+}
+
+/* // save to local storage
+
+    // update the local storage when there is any change
+    function updateToLocalStorage() {
+        // const save = people;
+        localStorage.setItem('people', JSON.stringify(people));
+    }
+
+    function saveToLocalStorage() {
+        const saveBirtdayList = JSON.parse(localStorage.getItem('people'));
+        if(saveBirtdayList) {
+            people = saveBirtdayList;
+            displayList(people);
+        }
+        tr.dispatchEvent(new CustomEvent('updatePeopleList'));
+    }
+    
+    }
+    tr.addEventListener('updatePeopleList', saveToLocalStorage);
+    updateToLocalStorage();
+
+     */
