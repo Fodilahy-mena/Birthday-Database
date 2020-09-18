@@ -149,3 +149,19 @@ input {
     updateToLocalStorage();
 
      */
+/* deletePersonBirthday.splice();
+				localStorage.setItem('people',JSON.stringify(deletePersonBirthday)); */
+				/* // save to local storage
+ function initLocalStorage() {
+    const saveBirtdayList = JSON.parse(localStorage.getItem('persons'));
+    if(saveBirtdayList) {
+        persons = saveBirtdayList;
+    }
+    tbody.dispatchEvent(new CustomEvent('updatePeopleList'));
+}
+//update the local storage when there is any change
+function updateToLocalStorage() {
+    localStorage.setItem('persons', JSON.stringify(persons));
+}
+tbody.addEventListener('updatePeopleList', updateToLocalStorage);
+initLocalStorage(); */
