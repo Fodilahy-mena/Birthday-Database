@@ -40,3 +40,26 @@ Once you're finished with the functionality, try to make your app more appealing
 Be creative 🎨
 
 Good Luck
+
+## Report
+
+### Structure
+
+- An async function from line 9 to line 18 is a destroy popup fuction which is called when users want to skip form popup.
+- go() async function is set in order to fetche all data from `people.json` using await. This function also wraps all functions that will be datailed below. Some of functions that are in it have nested functions. Basically, it is devided into three parts. The first function which is `displayPeople()` function has something to do with *displaying the data from fetched `people.json`*, *adding people to the data*, *deleting people from the data and ediditing*. The second and the third functions have something to do with initializing and updating the data to the localstorage.
+
+First of all I will be going a little bit more about the `displayPeople()` function which has the most of the main idea about this project.
+
+1. Ok..., umm - inside the `handleAddBirthday()` function, I utilized a `e.target.closest()` methode to check if a user click on a button that has an `add` class and if that is true, apply this `addBirthday()`. Then listen for a click event on the window to handle this `handleAddBirthday()` function in line 335. 
+    1. In the `addBirthday()` function, there is a form inputs that require some values from the user and push taht values to the fetched `people.json` if the user submit the form. Otherwise it dosen't do anything when user click on cancel button but destroying the form - form that behaves like a prompt.
+2. This `displayList` function from line 131 to 212 is displaying the data from fetched `people.json` to html file. A map() methode is used here to access each component of each person to a list. But in my case I used table rows instead of list items - just a matter of html and css prefference. 
+    1. Since date.fns is not really accessible for me, I used js new Date() trick to get the how old the person is and how many days left before their upcoming birthday. It does a little bit with it but it is right.
+
+3. 
+
+
+
+
+
+
+
