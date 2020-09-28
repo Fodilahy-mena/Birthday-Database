@@ -165,3 +165,44 @@ function updateToLocalStorage() {
 }
 tbody.addEventListener('updatePeopleList', updateToLocalStorage);
 initLocalStorage(); */
+
+
+/* Js draft */
+
+/* 
+let birthdates = [
+                new Date(timestamp_to_date.getFullYear(),timestamp_to_date.getMonth(),timestamp_to_date.getDate()), 
+                new Date(today.getFullYear(),today.getMonth(),today.getDate())];
+
+
+            birthdates.sort(function(firstDate,secondDate){
+
+                //calculate the difference between first date and current date
+                let firstDifference = new Date() - firstDate;
+            
+                //calculate difference between second date and current date.
+               let secondDifference = new Date() - secondDate;
+            
+                //return the smallest value.
+                return firstDifference - secondDifference;
+            
+            });
+            console.log(`${person.lastName}`,birthdates);
+            let dateOfBirth = `${timestamp_to_date.getFullYear()}
+            /${timestamp_to_date.getMonth()}
+            /${timestamp_to_date.getDate()}`;
+
+            console.log('Date of birth', dateOfBirth);
+
+            let dayOfBirth = dateOfBirth.split("/");
+            let currentYear = new Date().getFullYear();
+            let birthdayDate = new Date(currentYear, dayOfBirth[0] - 1, dayOfBirth[1])
+            let now = new Date().valueOf();
+            if (birthdayDate.valueOf() < now){ 
+                birthdayDate.setFullYear(currentYear+1)
+            }
+            person.fromNow = birthdayDate.valueOf() - now;
+            let ageNow = new Date(5283584266189);
+            console.log("nowage", today.getFullYear() - ageNow.getFullYear());
+            console.log(`${person.firstName}`,person.fromNow);
+*/

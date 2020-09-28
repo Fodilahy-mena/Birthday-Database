@@ -30,6 +30,7 @@ async function displayPeople() {
 
 let sortedPeople = persons.sort(function(a, b) {return b.birthday - a.birthday;});
 
+
 console.log("Sorted",sortedPeople);
 
 // add a birthday
@@ -168,17 +169,33 @@ const displayList = persons => {
             let today = new Date();
             // take the year of today and  subtracts it with the year of when the peron was born -
             // to get how old is the person
-            let age = today.getFullYear() - timestamp_to_date.getFullYear();
+            let age = today.getFullYear() - timestamp_to_date.getFullYear() + 1;
+            
+
+            let myBirthday, now, birthday, diff, days;
+            myBirthday = [timestamp_to_date.getDate(),timestamp_to_date.getMonth()]; // dayth of Month
+            now = new Date();
+            birthday = new Date(now.getFullYear(),myBirthday[1]-1,myBirthday[0]);
+            if( now.getTime() > birthday.getTime()) {
+                birthday.setFullYear(birthday.getFullYear()+1);
+            }
+            diff = birthday.getTime()-now.getTime();
+            days = Math.floor(diff/(1000*60*60*24));
+            
+            console.log(days + 'Days left until' + person.firstName+"'s birthday");
         return`
-        <tr data-id="${person.id}"  class="${index % 2 ? 'even' : 'odds'}">
+        <tr data-id="${person.id}"  class="${index % 2 ? 'even' : 'odds'}" ng-repeat="person in | orderBy:'fromNow' ">
+        
             <th scope="row">
                 <img src="${person.picture}" alt="${person.firstName + ' ' + person.lastName}"/>
             </th>
             <td>
                 <span>${person.firstName} ${person.lastName}</span><br>
+            </td>
+            <td>
                 <strong>Turns ${age} on ${month} ${date}<sup>${nth(date)}</sup></strong>
             </td>
-            <td>Days</td>
+            <td>${days} Days left until ${person.firstName} ${person.lastName}'s birthday</td>
             <td>
                 <button class="edit">
                     <img src="./edit.png" width="35"/>
