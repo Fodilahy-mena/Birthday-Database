@@ -55,11 +55,20 @@ First of all I will be going a little bit more about the `displayPeople()` funct
 2. This `displayList` function from line 131 to 212 is displaying the data from fetched `people.json` to html file. A map() methode is used here to access each component of each person to a list. But in my case I used table rows instead of list items - just a matter of html and css prefference. 
     1. Since date.fns is not really accessible for me, I used js new Date() trick to get the how old the person is and how many days left before their upcoming birthday. It does a little bit with it but it is right.
 
-3. 
+3. The `editBirthdayPopup()` is a edit popup form for the user to be able to convert their info from the birthday app. For example, changing their birthday date, First name, Last name, Avatar picture because sometimes there could be any misspelling or wrong date when entering them. Then the user can click on save button to submit their changes to the list if they are happy with it.
 
+4. An other function is `deleteBirthdayPopup()` which basically a popup form for confirmation - making sure that the user really decides to delete a person from the list after clicking on delete button.  
 
+### Improvements
 
+- We had quite a plenty of time to accomplish the project but it is only challenging. I would have gone a little bit forward with the sorting part if I could but I was running out of idea on how to sort the list by days left before each items's upcoming birthday. I also want to go further about editing. The changes that I made can't be saved in the local storage - meaning, it goes back as it was after refreshing the page.
 
+### Experience
 
+- What I learned was that I can not access anything from displayed html - deleting, editing them unless I pass the function that holds it to the function where to delete and edite things.
+
+### Challenges
+
+The most challenging part was to get each items's turning age, calculating the number of days left before upcoming birthday and sort the list according to that. 
 
 
