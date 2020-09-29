@@ -171,18 +171,27 @@ const displayList = persons => {
             // to get how old is the person
             let age = today.getFullYear() - timestamp_to_date.getFullYear() + 1;
             
+            console.log(`${person.lastName}'s birthday is on ${timestamp_to_date.getMonth() + 1} of ${timestamp_to_date.getDate()}`);
 
-            let myBirthday, now, birthday, diff, days;
-            myBirthday = [timestamp_to_date.getDate(),timestamp_to_date.getMonth()]; // dayth of Month
-            now = new Date();
-            birthday = new Date(now.getFullYear(),myBirthday[1]-1,myBirthday[0]);
-            if( now.getTime() > birthday.getTime()) {
-                birthday.setFullYear(birthday.getFullYear()+1);
+            function peopleBirthday(month, day) {
+
+                let now = new Date(),
+                  yearNow = now.getFullYear(),
+                  next = new Date(yearNow, month - 1, day);
+              
+                now.setHours(0, 0, 0, 0);
+              
+                if (now > next) next.setFullYear(yearNow + 1);
+              
+                return Math.round((next - now) / 8.64e7);
             }
-            diff = birthday.getTime()-now.getTime();
-            days = Math.floor(diff/(1000*60*60*24));
-            
-            console.log(days + 'Days left until' + person.firstName+"'s birthday");
+              
+              let birthday = peopleBirthday(timestamp_to_date.getMonth()+1,timestamp_to_date.getDate());
+              
+              if (birthday === 0) alert(`Happy Birthday ${person.lastName}`);
+              
+              else console.log(birthday + ' day' + (birthday > 1 ? 's' : '') + ' left until' + ` ${person.firstName}'s birthday`);
+
         return`
         <tr data-id="${person.id}"  class="${index % 2 ? 'even' : 'odds'}" ng-repeat="person in | orderBy:'fromNow' ">
         
@@ -195,7 +204,7 @@ const displayList = persons => {
             <td>
                 <strong>Turns ${age} on ${month} ${date}<sup>${nth(date)}</sup></strong>
             </td>
-            <td>${days} Days left until ${person.firstName} ${person.lastName}'s birthday</td>
+            <td>${birthday + ' day' + (birthday > 1 ? 's' : '')} left until ${person.firstName} ${person.lastName}'s birthday</td>
             <td>
                 <button class="edit">
                     <img src="./edit.png" width="35"/>
