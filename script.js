@@ -26,12 +26,38 @@ async function go() {
     let persons = data;
     // console.log(data);
 
+
 async function displayPeople() {
 
 let sortedPeople = persons.sort(function(a, b) {return b.birthday - a.birthday;});
 
+// console.log("Sorted",sortedPeople);
 
-console.log("Sorted",sortedPeople);
+// Search input
+const searchInput = document.querySelector('.search');
+    console.log(searchInput);
+    // const filterList = e => {
+    //     showPeople(e, searchInput.value);
+    // };
+    // searchInput.addEventListener('keyup', filterList);
+
+    // const showPeople = (e, filterFirstName) => {
+    //     let sortedPeople = persons.sort(function(a, b) {return b.birthday - a.birthday;});
+
+    //     if(filterFirstName) {
+    //         sortedPeople = sortedPeople.filter(person => {
+    //             let lowerCaseFirstName = person.firstName.toLowerCase();
+    //             let lowerCaseFilter = filterFirstName.toLowerCase();
+
+    //             if(lowerCaseFirstName.includes(lowerCaseFilter)) {
+    //                 console.log(sortedPeople);
+    //                 return true;
+    //             } else {
+    //                 return false;
+    //             }
+    //         });
+    //     }
+    // }
 
 // add a birthday
 const handleAddBirthday = (e) => {
@@ -188,12 +214,17 @@ const displayList = persons => {
               
               let birthday = peopleBirthday(timestamp_to_date.getMonth()+1,timestamp_to_date.getDate());
               
-              if (birthday === 0) alert(`Happy Birthday ${person.lastName}`);
-              
+              if (birthday === 0) {
+                let bListEl = document.querySelector(`[data-id= "${person.id}"]`);
+                bListEl.classList.remove('even');
+                bListEl.classList.remove('odds');
+                bListEl.classList.add('birthday');
+                console.log(bListEl);
+              }
               else console.log(birthday + ' day' + (birthday > 1 ? 's' : '') + ' left until' + ` ${person.firstName}'s birthday`);
 
         return`
-        <tr data-id="${person.id}"  class="${index % 2 ? 'even' : 'odds'}" ng-repeat="person in | orderBy:'fromNow' ">
+        <tr data-id="${person.id}" name="${person.firstName}"  class="${index % 2 ? 'even' : 'odds'}" ng-repeat="person in | orderBy:'fromNow' ">
         
             <th scope="row">
                 <img src="${person.picture}" alt="${person.firstName + ' ' + person.lastName}"/>
@@ -207,12 +238,12 @@ const displayList = persons => {
             <td>${birthday + ' day' + (birthday > 1 ? 's' : '')} left until ${person.firstName} ${person.lastName}'s birthday</td>
             <td>
                 <button class="edit">
-                    <img src="./edit.png" width="35"/>
+                    <img src="./edit.svg" width="35"/>
                 </button>
             </td>
             <td>
                 <button class="delete">
-                    <img src="./delete.png" width="35"/>
+                    <img src="./delete.svg" width="35"/>
                 </button>
             </td>
 		</tr>
@@ -345,6 +376,7 @@ const editBirthdayPopup = (id) => {
     displayList(persons);
     window.addEventListener('click', editBirthday);
     window.addEventListener('click', deleteBirthday);
+    // tbody.addEventListener('updatePeopleList', showPeople);
 }
 
 // displayPeople();

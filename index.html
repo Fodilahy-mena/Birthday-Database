@@ -10,9 +10,37 @@
 	</head>
 	<body>
 		<header>
-			<h1>Birthday app</h1>
+			<div>
+				<button class="cacke">
+					<img src="./cacke.svg" width="60">
+				</button>
+				<h1>Happy birthday</h1>
+				<button class="cacke">
+					<img src="./cacke.svg" width="60">
+				</button>
+			</div>
 			<p>List of people, sorted by the ones who will have their birthday the soonest.</p>
-			<button type="button" class="btn btn-primary add">Add new birthday list</button>
+			
+			<form class="form-inline">
+				<button type="button" class="btn btn-primary add">Add new birthday list</button>
+				<input class="form-control search" type="text" placeholder="Search" aria-label="Search">
+				  
+				<select class="form-control select" aria-labelledby="dropdownMenuLink">
+					<option>Select month to filter</option>
+					<option>January</option>
+					<option>February</option>
+					<option>March</option>
+					<option>April</option>
+					<option>May</option>
+					<option>June</option>,
+					<option>July</option>
+					<option>August</option>
+					<option>September</option>
+					<option>October</option>
+					<option>November</option>
+					<option>December</option>
+				</select>
+			</form>
 		</header>
 		<div class="table-responsive">
 			<table class="table">
