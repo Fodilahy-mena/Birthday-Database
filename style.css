@@ -85,7 +85,7 @@ tr {
 
 .popup {
 	/* background: hsla(0, 0%, 30%, 0.5); */
-	animation: bgmove 0.5s infinite;
+	animation: bgmove 5s infinite;
 	background: rgb(107,6,107);
 	/* background: linear-gradient(90deg, hsla(0, 0%, 55%, 0.5) 0%, hsla(133, 97%, 49%, 0.5) 14%, hsla(244, 95%, 49%, 0.5) 27%, hsla(0, 0%, 98%, 0.5) 51%, hsla(303, 97%, 50%, 0.5) 75%, hsla(130, 97%, 49%, 0.5) 91%, hsla(0, 95%, 50%, 0.5) 100%); */
 	position: fixed;
@@ -103,8 +103,16 @@ tr {
 }
 
 @keyframes bgmove {
-	from {background: linear-gradient(90deg, hsla(0, 0%, 55%, 0.5) 0%, hsla(133, 97%, 49%, 0.5) 14%, hsla(244, 95%, 49%, 0.5) 27%, hsla(0, 0%, 98%, 0.5) 51%, hsla(303, 97%, 50%, 0.5) 75%, hsla(130, 97%, 49%, 0.5) 91%, hsla(0, 95%, 50%, 0.5) 100%);}
-	to {background: hsla(310, 96%, 50%, 0.5);}
+	/* from {background: linear-gradient(90deg, hsla(0, 0%, 55%, 0.5) 0%, hsla(133, 97%, 49%, 0.5) 14%, hsla(244, 95%, 49%, 0.5) 27%, hsla(0, 0%, 98%, 0.5) 51%, hsla(303, 97%, 50%, 0.5) 75%, hsla(130, 97%, 49%, 0.5) 91%, hsla(0, 95%, 50%, 0.5) 100%);} */
+	/* to {background: hsla(310, 96%, 50%, 0.5);} */
+	0%     {background-color: hsla(0, 89%, 49%, 0.5);}
+	10.0% {background-color: hsla(0, 9%, 98%, 0.5);}
+	25.0% {background-color: hsla(54, 94%, 50%, 0.5);}
+	35.0% {background-color: hsla(113, 98%, 51%, 0.5);}
+	50.0%  {background: linear-gradient(90deg, hsla(0, 0%, 55%, 0.5) 0%, hsla(133, 97%, 49%, 0.5) 14%, hsla(244, 95%, 49%, 0.5) 27%, hsla(0, 0%, 98%, 0.5) 51%, hsla(303, 97%, 50%, 0.5) 75%, hsla(130, 97%, 49%, 0.5) 91%, hsla(0, 95%, 50%, 0.5) 100%);}
+	75.0%  {background-color: hsla(244, 89%, 49%, 0.5);}
+	85.0% {background-color: hsla(0, 100%, 3%, 0.5);}
+    100.0%  {background: hsla(310, 96%, 50%, 0.5);}
   }
 
 .popup fieldset {

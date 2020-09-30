@@ -25,31 +25,27 @@ async function go() {
     let data = await response.json();
     let persons = data;
     // console.log(data);
+    
 // Search input
 const searchInput = document.querySelector('.search');
     console.log(searchInput);
     // const filterList = e => {
     //     showPeople(e, searchInput.value);
     // };
-    // searchInput.addEventListener('keyup', showPeople(peopleList));
+    searchInput.addEventListener('input', showPeople(persons));
 
-    // function showPeople() {
-    //     let sortedPeople = persons.sort(function(a, b) {return b.birthday - a.birthday;});
+    function showPeople(peopleList) {
+        let personsFiltered = peopleList;
 
-    //     if(filterFirstName) {
-    //         sortedPeople = sortedPeople.filter(person => {
-    //             let lowerCaseFirstName = person.firstName.toLowerCase();
-    //             let lowerCaseFilter = filterFirstName.toLowerCase();
-
-    //             if(lowerCaseFirstName.includes(lowerCaseFilter)) {
-    //                 console.log(sortedPeople);
-    //                 return true;
-    //             } else {
-    //                 return false;
-    //             }
-    //         });
-    //     }
-    // }
+        if(searchInput.value !== '') {
+            personsFiltered = personsFiltered.filter(person => {
+                let lowerCaseFullName = person.firstName.toLowerCase() + ' ' + person.lastName.toLowerCase();
+                console.log(lowerCaseFullName.includes(searchInput.value.toLowerCase()));
+                return lowerCaseFullName.includes(searchInput.value.toLowerCase());
+                
+            });
+        }
+    }
 
 
 async function displayPeople() {
