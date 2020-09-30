@@ -84,8 +84,12 @@ tr {
 /* popup */
 
 .popup {
-	background: hsla(0, 0%, 30%, 0.5);
+	/* background: hsla(0, 0%, 30%, 0.5); */
+	animation: bgmove 0.5s infinite;
+	background: rgb(107,6,107);
+	/* background: linear-gradient(90deg, hsla(0, 0%, 55%, 0.5) 0%, hsla(133, 97%, 49%, 0.5) 14%, hsla(244, 95%, 49%, 0.5) 27%, hsla(0, 0%, 98%, 0.5) 51%, hsla(303, 97%, 50%, 0.5) 75%, hsla(130, 97%, 49%, 0.5) 91%, hsla(0, 95%, 50%, 0.5) 100%); */
 	position: fixed;
+	/* transition: all; */
 	height: 100vh;
 	width: 100vw;
 	transition: all 0.25s;
@@ -95,7 +99,13 @@ tr {
 	align-items: center;
 	pointer-events: none;
 	opacity: 0;
+	left: 0;
 }
+
+@keyframes bgmove {
+	from {background: linear-gradient(90deg, hsla(0, 0%, 55%, 0.5) 0%, hsla(133, 97%, 49%, 0.5) 14%, hsla(244, 95%, 49%, 0.5) 27%, hsla(0, 0%, 98%, 0.5) 51%, hsla(303, 97%, 50%, 0.5) 75%, hsla(130, 97%, 49%, 0.5) 91%, hsla(0, 95%, 50%, 0.5) 100%);}
+	to {background: hsla(310, 96%, 50%, 0.5);}
+  }
 
 .popup fieldset {
 	padding: 2rem;
@@ -168,10 +178,10 @@ input {
 	color: goldenrod;
 }
 
-.btn-primary, .search, .select {
+.btn-primary, .search, .select,.reset-filters {
 	margin-block-end: 1rem;
 }
-.search, .select {
+.search, .select, .reset-filters {
 	margin-left: 1rem;
 }
 
@@ -260,3 +270,46 @@ let birthdates = [
             console.log("nowage", today.getFullYear() - ageNow.getFullYear());
             console.log(`${person.firstName}`,person.fromNow);
 */
+
+/*        // Search input
+const searchInput = document.querySelector('.search');
+console.log(searchInput);
+
+const showPeople = () => {
+let inputValue = searchInput.value;
+let inputValueLowerCase = inputValue.toLowerCase();
+
+let filteredFirstName = persons.filter(person =>  
+    person.firstName.toLowerCase().includes(inputValueLowerCase)
+);
+
+let htmlFilter = displayList(filteredFirstName);
+tbody.innerHTML = htmlFilter;
+console.log(htmlFilter);
+}
+searchInput.addEventListener('keyup', showPeople);
+
+// const filterList = e => {
+//     showPeople(e, searchInput.value);
+// };
+// searchInput.addEventListener('keyup', filterList);
+
+// const showPeople = (e, filterFirstName) => {
+//     let sortedPeople = persons.sort(function(a, b) {return b.birthday - a.birthday;});
+
+//     if(filterFirstName) {
+//         sortedPeople = sortedPeople.filter(person => {
+//             let lowerCaseFirstName = person.firstName.toLowerCase();
+//             let lowerCaseFilter = filterFirstName.toLowerCase();
+
+//             if(lowerCaseFirstName.includes(lowerCaseFilter)) {
+//                 console.log(sortedPeople);
+//                 return true;
+//             } else {
+//                 return false;
+//             }
+//         });
+//     }
+// }
+
+ */

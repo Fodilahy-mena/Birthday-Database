@@ -25,23 +25,15 @@ async function go() {
     let data = await response.json();
     let persons = data;
     // console.log(data);
-
-
-async function displayPeople() {
-
-let sortedPeople = persons.sort(function(a, b) {return b.birthday - a.birthday;});
-
-// console.log("Sorted",sortedPeople);
-
 // Search input
 const searchInput = document.querySelector('.search');
     console.log(searchInput);
     // const filterList = e => {
     //     showPeople(e, searchInput.value);
     // };
-    // searchInput.addEventListener('keyup', filterList);
+    // searchInput.addEventListener('keyup', showPeople(peopleList));
 
-    // const showPeople = (e, filterFirstName) => {
+    // function showPeople() {
     //     let sortedPeople = persons.sort(function(a, b) {return b.birthday - a.birthday;});
 
     //     if(filterFirstName) {
@@ -58,6 +50,14 @@ const searchInput = document.querySelector('.search');
     //         });
     //     }
     // }
+
+
+async function displayPeople() {
+
+let sortedPeople = persons.sort(function(a, b) {return b.birthday - a.birthday;});
+
+// console.log("Sorted",sortedPeople);
+
 
 // add a birthday
 const handleAddBirthday = (e) => {
