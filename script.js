@@ -26,16 +26,23 @@ async function go() {
     let persons = data;
     // console.log(data);
     
+
+
+async function displayPeople() {
+
+let sortedPeople = persons.sort(function(a, b) {return b.birthday - a.birthday;});
 // Search input
 const searchInput = document.querySelector('.search');
     console.log(searchInput);
-    // const filterList = e => {
-    //     showPeople(e, searchInput.value);
-    // };
-    searchInput.addEventListener('input', showPeople(persons));
+    searchInput.addEventListener('input', console.log(displayList(persons)));
 
-    function showPeople(peopleList) {
-        let personsFiltered = peopleList;
+    console.log(displayList(persons));
+// console.log("Sorted",sortedPeople);
+
+
+    // create a displayLyst function to display the data frome the people.json
+function displayList(persons) {
+    let personsFiltered = persons;
 
         if(searchInput.value !== '') {
             personsFiltered = personsFiltered.filter(person => {
@@ -45,17 +52,103 @@ const searchInput = document.querySelector('.search');
                 
             });
         }
+        // insert the table row as an inner html in the table body
+        tbody.innerHTML = persons
+        // pass a parameter persons to get the data which has been fetched
+        // and map it in order to access all the keys and values from it
+        .map((person, index) => { // this index callback is just for css styling in this case
+
+            // function for superscript ordinals
+            function nth(day) { // pass a day parameter
+                // if the day is less than 3 and more than 21, use "th" as a superscript ordinal
+                if(day > 3 && day < 21) return 'th';
+                // is the number of the day is not with 10 for example -
+                // 11, 12, 13, then don't use "st" "nd" "rd" as superscript ordinals.
+
+                // but with 1, 2, 3, 21, 22, 23, and 31, use them as superscript ordinals
+                switch(day % 10) {
+                    case 1: return "st";
+                    case 2: return "nd";
+                    case 3: return "rd";
+                    // if the day number is out of those numbers, use "th" as a default 
+                    default: return "th";
+                }
+            }
+
+            // Change the person's birthday timestamp number into a normal date,
+            // it may include time zone
+            let timestamp_to_date = new Date(person.birthday);
+
+            // take the only date not with time zone or anything by using getDate()
+            const date = timestamp_to_date.getDate();
+
+            // create a month array to set all of the month names and compare it to 
+            // the the month number according to the date from the person's birthday using getMonth() 
+            const month = ["January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+            ][timestamp_to_date.getMonth()];
+
+            // get that date today
+            let today = new Date();
+            // take the year of today and  subtracts it with the year of when the peron was born -
+            // to get how old is the person
+            let age = today.getFullYear() - timestamp_to_date.getFullYear() + 1;
+            
+            // console.log(`${person.lastName}'s birthday is on ${timestamp_to_date.getMonth() + 1} of ${timestamp_to_date.getDate()}`);
+
+            function peopleBirthday(month, day) {
+
+                let now = new Date(),
+                  yearNow = now.getFullYear(),
+                  next = new Date(yearNow, month - 1, day);
+              
+                now.setHours(0, 0, 0, 0);
+              
+                if (now > next) next.setFullYear(yearNow + 1);
+              
+                return Math.round((next - now) / 8.64e7);
+            }
+              
+              let birthday = peopleBirthday(timestamp_to_date.getMonth()+1,timestamp_to_date.getDate());
+              
+              if (birthday === 0) {
+                let bListEl = document.querySelector(`[data-id= "${person.id}"]`);
+                bListEl.classList.remove('even');
+                bListEl.classList.remove('odds');
+                bListEl.classList.add('birthday');
+                // console.log(bListEl);
+              }
+            //   else console.log(birthday + ' day' + (birthday > 1 ? 's' : '') + ' left until' + ` ${person.firstName}'s birthday`);
+
+        return`
+        <tr data-id="${person.id}" name="${person.firstName}"  class="${index % 2 ? 'even' : 'odds'}" ng-repeat="person in | orderBy:'fromNow' ">
+        
+            <th scope="row">
+                <img src="${person.picture}" alt="${person.firstName + ' ' + person.lastName}"/>
+            </th>
+            <td>
+                <span>${person.firstName} ${person.lastName}</span><br>
+            </td>
+            <td>
+                <strong>Turns ${age} on ${month} ${date}<sup>${nth(date)}</sup></strong>
+            </td>
+            <td>${birthday + ' day' + (birthday > 1 ? 's' : '')} left until ${person.firstName} ${person.lastName}'s birthday</td>
+            <td>
+                <button class="edit">
+                    <img src="./edit.svg" width="35"/>
+                </button>
+            </td>
+            <td>
+                <button class="delete">
+                    <img src="./delete.svg" width="35"/>
+                </button>
+            </td>
+		</tr>
+        `;
+    }).join('');
     }
 
-
-async function displayPeople() {
-
-let sortedPeople = persons.sort(function(a, b) {return b.birthday - a.birthday;});
-
-// console.log("Sorted",sortedPeople);
-
-
-// add a birthday
+    // add a birthday
 const handleAddBirthday = (e) => {
     // If the user click on add button wherever in the window it finds....
     if (e.target.closest('button.add')) {
@@ -148,104 +241,6 @@ const addBirthday = () => {
     });
 
 }
-
-    // create a displayLyst function to display the data frome the people.json
-const displayList = persons => {
-        // insert the table row as an inner html in the table body
-        tbody.innerHTML = persons
-        // pass a parameter persons to get the data which has been fetched
-        // and map it in order to access all the keys and values from it
-        .map((person, index) => { // this index callback is just for css styling in this case
-
-            // function for superscript ordinals
-            function nth(day) { // pass a day parameter
-                // if the day is less than 3 and more than 21, use "th" as a superscript ordinal
-                if(day > 3 && day < 21) return 'th';
-                // is the number of the day is not with 10 for example -
-                // 11, 12, 13, then don't use "st" "nd" "rd" as superscript ordinals.
-
-                // but with 1, 2, 3, 21, 22, 23, and 31, use them as superscript ordinals
-                switch(day % 10) {
-                    case 1: return "st";
-                    case 2: return "nd";
-                    case 3: return "rd";
-                    // if the day number is out of those numbers, use "th" as a default 
-                    default: return "th";
-                }
-            }
-
-            // Change the person's birthday timestamp number into a normal date,
-            // it may include time zone
-            let timestamp_to_date = new Date(person.birthday);
-
-            // take the only date not with time zone or anything by using getDate()
-            const date = timestamp_to_date.getDate();
-
-            // create a month array to set all of the month names and compare it to 
-            // the the month number according to the date from the person's birthday using getMonth() 
-            const month = ["January", "February", "March", "April", "May", "June",
-            "July", "August", "September", "October", "November", "December"
-            ][timestamp_to_date.getMonth()];
-
-            // get that date today
-            let today = new Date();
-            // take the year of today and  subtracts it with the year of when the peron was born -
-            // to get how old is the person
-            let age = today.getFullYear() - timestamp_to_date.getFullYear() + 1;
-            
-            console.log(`${person.lastName}'s birthday is on ${timestamp_to_date.getMonth() + 1} of ${timestamp_to_date.getDate()}`);
-
-            function peopleBirthday(month, day) {
-
-                let now = new Date(),
-                  yearNow = now.getFullYear(),
-                  next = new Date(yearNow, month - 1, day);
-              
-                now.setHours(0, 0, 0, 0);
-              
-                if (now > next) next.setFullYear(yearNow + 1);
-              
-                return Math.round((next - now) / 8.64e7);
-            }
-              
-              let birthday = peopleBirthday(timestamp_to_date.getMonth()+1,timestamp_to_date.getDate());
-              
-              if (birthday === 0) {
-                let bListEl = document.querySelector(`[data-id= "${person.id}"]`);
-                bListEl.classList.remove('even');
-                bListEl.classList.remove('odds');
-                bListEl.classList.add('birthday');
-                console.log(bListEl);
-              }
-              else console.log(birthday + ' day' + (birthday > 1 ? 's' : '') + ' left until' + ` ${person.firstName}'s birthday`);
-
-        return`
-        <tr data-id="${person.id}" name="${person.firstName}"  class="${index % 2 ? 'even' : 'odds'}" ng-repeat="person in | orderBy:'fromNow' ">
-        
-            <th scope="row">
-                <img src="${person.picture}" alt="${person.firstName + ' ' + person.lastName}"/>
-            </th>
-            <td>
-                <span>${person.firstName} ${person.lastName}</span><br>
-            </td>
-            <td>
-                <strong>Turns ${age} on ${month} ${date}<sup>${nth(date)}</sup></strong>
-            </td>
-            <td>${birthday + ' day' + (birthday > 1 ? 's' : '')} left until ${person.firstName} ${person.lastName}'s birthday</td>
-            <td>
-                <button class="edit">
-                    <img src="./edit.svg" width="35"/>
-                </button>
-            </td>
-            <td>
-                <button class="delete">
-                    <img src="./delete.svg" width="35"/>
-                </button>
-            </td>
-		</tr>
-        `;
-    }).join('');
-    }
 
 
 const editBirthday = (e) => {
