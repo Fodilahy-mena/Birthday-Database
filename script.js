@@ -24,7 +24,7 @@ async function go() {
     // a response variable and await it with fetched variable
     let data = await response.json();
     let persons = data;
-    // console.log(data);
+    console.log(data);
     
 
 
