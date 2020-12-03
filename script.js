@@ -34,11 +34,8 @@ let sortedPeople = persons.sort(function(a, b) {return b.birthday - a.birthday;}
 // Search input
 const searchInput = document.querySelector('.search');
     console.log(searchInput);
-    searchInput.addEventListener('input', console.log(displayList(persons)));
-
-    console.log(displayList(persons));
-// console.log("Sorted",sortedPeople);
-
+    
+    searchInput.addEventListener('input', displayList(persons));
 
     // create a displayLyst function to display the data frome the people.json
 function displayList(persons) {
@@ -385,6 +382,7 @@ function initLocalStorage() {
 function updateToLocalStorage() {
     localStorage.setItem('persons', JSON.stringify(persons));
 }
+
 tbody.addEventListener('updatePeopleList', updateToLocalStorage);
 initLocalStorage();
 

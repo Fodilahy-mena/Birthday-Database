@@ -2,5 +2,8 @@
   "dependencies": {
     "date-fns": "^2.16.1",
     "regenerator-runtime": "^0.13.7"
-  }
+  },
+  "browserslist": [
+    "last 1 chrome version"
+  ]
 }
