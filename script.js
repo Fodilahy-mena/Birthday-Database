@@ -98,8 +98,7 @@ function displayList(persons) {
             // to get how old is the person
             let age = today.getFullYear() - timestamp_to_date.getFullYear() + 1;
             
-            // console.log(`${person.lastName}'s birthday is on ${timestamp_to_date.getMonth() + 1} of ${timestamp_to_date.getDate()}`);
-
+           
             function peopleBirthday(month, day) {
 
                 let now = new Date(),
@@ -107,7 +106,7 @@ function displayList(persons) {
                   next = new Date(yearNow, month - 1, day);
               
                 now.setHours(0, 0, 0, 0);
-                console.log(new Date(Date.now()).getDate())
+                
                 if (now > next) next.setFullYear(yearNow + 1);
               
                 return Math.round((next - now) / 8.64e7);
@@ -115,29 +114,21 @@ function displayList(persons) {
               
               let birthday = peopleBirthday(timestamp_to_date.getMonth()+1,timestamp_to_date.getDate());
               
-            //   if (birthday == 0) {
-            //     let bListEl = document.querySelector(`[data-id= "${person.id}"]`);
-            //     bListEl.classList.remove('even');
-            //     bListEl.classList.remove('odds');
-            //     bListEl.classList.add('birthday');
-            //     console.log(bListEl);
-            //   }
-            // //   else console.log(birthday + ' day' + (birthday > 1 ? 's' : '') + ' left until' + ` ${person.firstName}'s birthday`);
-
+            
         return`
         <tr data-id="${person.id}" name="${person.firstName}" id="table_row" class="${index % 2 ? `${birthday === 0 ? "birthday" : "even"}` : `${birthday === 0 ? "birthday" : "odds"}`}" ng-repeat="person in | orderBy:'fromNow' ">
         
             <th scope="row">
-                <img src="${person.picture}" alt="${person.firstName + ' ' + person.lastName}"/>
+                <img class="${index % 2 ? `even_img` : `odd_img`}" src="${person.picture}" alt="${person.firstName + ' ' + person.lastName}"/>
             </th>
             <td>
                 <span>${person.firstName} ${person.lastName}</span><br>
-                <strong>Turns ${age} ${birthday === 0 ? "today" : `on ${month} ${date}<sup>${nth(date)}`}</sup></strong>
+                <strong>Turns <span class="age">${age}</span> ${birthday === 0 ? "today" : `on ${month} ${date}<sup>${nth(date)}`}</sup></strong>
             </td>
-            <td>
+            <td class="upcoming_birthday">
                 <span>${birthday === 0 
-                    ? `Happy birthday ${person.lastName}` 
-                    : "In" + " " + birthday + ' day' + (birthday > 1 ? 's' : '')}
+                    ? `<span>Happy birthday ${person.lastName}</span>` 
+                    : "In " + `<span class="days">${ birthday}</span>` + ' day' + (birthday > 1 ? 's' : '')}
                 </span>
                 <div class="buttons">
                     <button class="edit">

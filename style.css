@@ -1,9 +1,16 @@
 body {
-	max-width: 90%;
-    min-width: 90%;
-    margin: auto;
 	/* background-color: #fef6e4; */
 	background: #D8EEFE;
+	font-size: 18px;
+	font-family: Poppins;
+	margin: 16px;
+}
+@media (min-width: 779px) {
+	body {
+		max-width: 60%;
+		min-width: 60%;
+		margin: auto;
+	}
 }
 
 body > header > div { 
@@ -15,7 +22,7 @@ body > header > div {
 h1 {
 	margin: 0;
 	text-transform: uppercase;
-	font-family: Rubik;
+	font-family: Poppins;
 	font-style: normal;
 	font-weight: bold;
 	font-size: 64px;
@@ -38,9 +45,14 @@ thead {
 }
 th img {
 	width: 100px;
-	border-radius: 50%;
+	border-radius: 5px;
 }
-
+.odd_img {
+	border: 3px solid white;
+}
+.even_img {
+	border: 3px solid#094067;
+}
 
 .table td, .table th {
     padding: .75rem;
@@ -62,7 +74,7 @@ button {
 
 .even {
 	background-color: #fffffe;
-	color: blue;
+	color: #5F6C7B;
 }
 
 .birthday {
@@ -71,6 +83,18 @@ button {
 	color: black;
 }
 
+.age {
+	color: #EF4565;
+}
+.days {
+	font-family: Rubik;
+	font-style: normal;
+	font-weight: bold;
+	/* font-size: 24px; */
+	line-height: 28px;
+
+	color:  #f86781;
+}
 
 /* @keyframes mymove {
 	from {background-color: rgb(252, 5, 252);}
@@ -78,14 +102,22 @@ button {
   } */
 .odds {
 	color: white;
-	background-color: skyblue;
+	background-color: #094067;
 }
 
 tr {
 	margin-top: 1rem;
 	margin-bottom: 1rem;
 }
-
+.upcoming_birthday {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: stretch;
+}
+.upcoming_birthday > span {
+	align-self: center;
+}
 /* popup */
 
 .popup {

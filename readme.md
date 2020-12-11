@@ -50,7 +50,7 @@ Good Luck
 
 First of all I will be going a little bit more about the `displayPeople()` function which has the most of the main idea about this project.
 
-1. Ok..., umm - inside the `handleAddBirthday()` function, I utilized a `e.target.closest()` methode to check if a user click on a button that has an `add` class and if that is true, apply this `addBirthday()`. Then listen for a click event on the window to handle this `handleAddBirthday()` function in line 335. 
+1. Inside the `handleAddBirthday()` function, I utilized a `e.target.closest()` methode to check if a user click on a button that has an `add` class and if that is true, apply this `addBirthday()`. Then listen for a click event on the window to handle this `handleAddBirthday()` function in line 335. 
     1. In the `addBirthday()` function, there is a form inputs that require some values from the user and push taht values to the fetched `people.json` if the user submit the form. Otherwise it dosen't do anything when user click on cancel button but destroying the form - form that behaves like a prompt.
 2. This `displayList` function from line 131 to 212 is displaying the data from fetched `people.json` to html file. A map() methode is used here to access each component of each person to a list. But in my case I used table rows instead of list items - just a matter of html and css prefference. 
     1. Since date.fns is not really accessible for me, I used js new Date() trick to get the how old the person is and how many days left before their upcoming birthday. It does a little bit with it but it is right.
@@ -59,9 +59,11 @@ First of all I will be going a little bit more about the `displayPeople()` funct
 
 4. An other function is `deleteBirthdayPopup()` which basically a popup form for confirmation - making sure that the user really decides to delete a person from the list after clicking on delete button.  
 
+
 ### Improvements
 
-- We had quite a plenty of time to accomplish the project but it is only challenging. I would have gone a little bit forward with the sorting part if I could but I was running out of idea on how to sort the list by days left before each items's upcoming birthday. I also want to go further about editing. The changes that I made can't be saved in the local storage - meaning, it goes back as it was after refreshing the page.
+- We had quite a plenty of time to accomplish the project but it is only challenging.
+The changes that I made can't be saved in the local storage - meaning, it goes back as it was after refreshing the page.
 
 ### Experience
 
