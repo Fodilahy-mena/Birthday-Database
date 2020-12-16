@@ -117,11 +117,14 @@ button {
 	color:  #f86781;
 }
 
-
-
-tr {
-	border-radius: 5px;
+.table tr {
+	border: 2px red solid;
+    border-radius: 10px;
 }
+.table td, .table th {
+	padding: 25px;
+}
+
 table {
     border-collapse: separate;
     border-spacing:0 31px;
@@ -133,7 +136,30 @@ table {
 	align-items: stretch;
 }
 .upcoming_birthday > span {
-	align-self: center;
+	align-self: flex-end;
+	font-weight: 500;
+	font-size: 24px;
+	line-height: 28px;
+
+	color: #5F6C7B;
+}
+
+.name {
+	font-weight: 500;
+	font-size: 36px;
+	line-height: 43px;
+	/* identical to box height */
+	color: #000000;
+
+}
+
+.turning_age {
+	font-weight: 500;
+	font-size: 24px;
+	line-height: 28px;
+
+	color: #5F6C7B;
+
 }
 /* popup */
 
@@ -233,6 +259,7 @@ input {
 	font-size: 20px;
 	font-weight: 700;
 	color: goldenrod;
+
 }
 
 
@@ -244,5 +271,6 @@ input {
 
   .buttons {
 	display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
+    gap: 16px;
   }

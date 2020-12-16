@@ -121,12 +121,12 @@ function displayList(persons) {
                 <img class="${index % 2 ? `even_img` : `odd_img`}" src="${person.picture}" alt="${person.firstName + ' ' + person.lastName}"/>
             </th>
             <td>
-                <span>${person.firstName} ${person.lastName}</span><br>
-                <strong>Turns <span class="age">${age}</span> ${birthday === 0 ? "today" : `on ${month} ${date}<sup>${nth(date)}`}</sup></strong>
+                <span class="name">${person.firstName} ${person.lastName}</span><br>
+                <strong class="turning_age">Turns <span class="age">${age}</span> ${birthday === 0 ? "today" : `on ${month} ${date}<sup>${nth(date)}`}</sup></strong>
             </td>
             <td class="upcoming_birthday">
                 <span>${birthday === 0 
-                    ? `<span>Happy birthday ${person.lastName}</span>` 
+                    ? `<span>Happy birthday</span>` 
                     : "In " + `<span class="days">${ birthday}</span>` + ' day' + (birthday > 1 ? 's' : '')}
                 </span>
                 <div class="buttons">
