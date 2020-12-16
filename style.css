@@ -12,7 +12,11 @@ body {
 		margin: auto;
 	}
 }
-
+body > header > form {
+	display: flex;
+	gap: 20px;
+	margin-bottom: 16px;
+}
 body > header > div { 
 	display: flex;
 	margin-bottom: 2rem;
@@ -21,22 +25,44 @@ body > header > div {
 }
 h1 {
 	margin: 0;
-	text-transform: uppercase;
+	/* text-transform: uppercase; */
 	font-family: Poppins;
 	font-style: normal;
 	font-weight: bold;
 	font-size: 64px;
 	line-height: 76px;
 /* identical to box height */
-
-
 	color: #094067;
-	text-shadow: 0 1px #808d93, -1px 0 #cdd2d5, -1px 2px #808d93, -2px 1px #cdd2d5, -2px 3px #808d93, -3px 2px #cdd2d5, -3px 4px #808d93, -4px 3px #cdd2d5, -4px 5px #808d93, -5px 4px #cdd2d5, -5px 6px #808d93, -6px 5px #cdd2d5, -6px 7px #808d93, -7px 6px #cdd2d5, -7px 8px #808d93, -8px 7px #cdd2d5;
 	
 }
 .add {
-	background-color: #ffd803;
-	color: #272343;
+	background: #EF4565;
+	border-radius: 5px;
+	/* font-family: Rubik; */
+	font-style: normal;
+	font-weight: 500;
+	font-size: 18px;
+	border: none;
+	color: #FFFFFE;
+	padding: 15px 20px;
+	cursor: pointer;
+	outline: none;
+}
+.add:hover {
+	color: #FFFFFE;
+} 
+.search, .select, .reset-filters {
+	padding: 15px 20px;
+	background: #FFFFFE;
+	border-radius: 5px;
+	border: none;
+	font-weight: 500;
+	font-size: 18px;
+	/* line-height: 21px; */
+
+	color: #5F6C7B;
+	outline: none;
+	cursor: pointer;
 }
 thead {
 	background-color:#EF4565;
@@ -47,12 +73,7 @@ th img {
 	width: 100px;
 	border-radius: 5px;
 }
-.odd_img {
-	border: 3px solid white;
-}
-.even_img {
-	border: 3px solid#094067;
-}
+
 
 .table td, .table th {
     padding: .75rem;
@@ -72,7 +93,7 @@ button {
     background-color: transparent;
 }
 
-.even {
+.even, .odds {
 	background-color: #fffffe;
 	color: #5F6C7B;
 }
@@ -96,18 +117,14 @@ button {
 	color:  #f86781;
 }
 
-/* @keyframes mymove {
-	from {background-color: rgb(252, 5, 252);}
-	to {background-color: rgb(255, 255, 255);}
-  } */
-.odds {
-	color: white;
-	background-color: #094067;
-}
+
 
 tr {
-	margin-top: 1rem;
-	margin-bottom: 1rem;
+	border-radius: 5px;
+}
+table {
+    border-collapse: separate;
+    border-spacing:0 31px;
 }
 .upcoming_birthday {
 	display: flex;
@@ -218,12 +235,6 @@ input {
 	color: goldenrod;
 }
 
-.btn-primary, .search, .select,.reset-filters {
-	margin-block-end: 1rem;
-}
-.search, .select, .reset-filters {
-	margin-left: 1rem;
-}
 
 .select {
 	display: inline-block;
@@ -231,21 +242,6 @@ input {
     vertical-align: middle;
 }
 
-/* table{
-	table-layout: fixed;
-  }
-
-  td, th{
-	overflow: hidden;
-	white-space: nowrap;
-	-moz-text-overflow: ellipsis;        
-	   -ms-text-overflow: ellipsis;
-		-o-text-overflow: ellipsis;
-		   text-overflow: ellipsis;
-  } */
-  #table_row {
-	  margin-bottom: 16px;
-  }
   .buttons {
 	display: flex;
     justify-content: space-between;

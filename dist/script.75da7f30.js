@@ -144,26 +144,27 @@ async function go() {
   console.log(data);
 
   async function displayPeople() {
-    let sortedPeople = persons.sort(function (a, b) {
-      return b.birthday - a.birthday;
+    const sortedPeople = persons.sort(function (a, b) {
+      function peopleBirthday(month, day) {
+        let now = new Date(),
+            yearNow = now.getFullYear(),
+            next = new Date(yearNow, month - 1, day);
+        now.setHours(0, 0, 0, 0);
+        if (now > next) next.setFullYear(yearNow + 1);
+        return Math.round((next - now) / 8.64e7);
+      }
+
+      let birthday1 = peopleBirthday(new Date(a.birthday).getMonth() + 1, new Date(a.birthday).getDate());
+      let birthday2 = peopleBirthday(new Date(b.birthday).getMonth() + 1, new Date(b.birthday).getDate());
+      return birthday1 - birthday2;
     }); // Search input
 
     const searchInput = document.querySelector('.search');
-    console.log(searchInput);
-    searchInput.addEventListener('input', displayList(persons)); // create a displayLyst function to display the data frome the people.json
+    const selectInput = document.querySelector(".select");
+    const resetFilterButton = document.querySelector('.reset-filters'); // create a displayLyst function to display the data frome the people.json
 
     function displayList(persons) {
-      let personsFiltered = persons;
-
-      if (searchInput.value !== '') {
-        personsFiltered = personsFiltered.filter(person => {
-          let lowerCaseFullName = person.firstName.toLowerCase() + ' ' + person.lastName.toLowerCase();
-          console.log(lowerCaseFullName.includes(searchInput.value.toLowerCase()));
-          return lowerCaseFullName.includes(searchInput.value.toLowerCase());
-        });
-      } // insert the table row as an inner html in the table body
-
-
+      // insert the table row as an inner html in the table body
       tbody.innerHTML = persons // pass a parameter persons to get the data which has been fetched
       // and map it in order to access all the keys and values from it
       .map((person, index) => {
@@ -204,7 +205,7 @@ async function go() {
         let today = new Date(); // take the year of today and  subtracts it with the year of when the peron was born -
         // to get how old is the person
 
-        let age = today.getFullYear() - timestamp_to_date.getFullYear() + 1; // console.log(`${person.lastName}'s birthday is on ${timestamp_to_date.getMonth() + 1} of ${timestamp_to_date.getDate()}`);
+        let age = today.getFullYear() - timestamp_to_date.getFullYear() + 1;
 
         function peopleBirthday(month, day) {
           let now = new Date(),
@@ -216,37 +217,27 @@ async function go() {
         }
 
         let birthday = peopleBirthday(timestamp_to_date.getMonth() + 1, timestamp_to_date.getDate());
-
-        if (birthday === 0) {
-          let bListEl = document.querySelector(`[data-id= "${person.id}"]`);
-          bListEl.classList.remove('even');
-          bListEl.classList.remove('odds');
-          bListEl.classList.add('birthday'); // console.log(bListEl);
-        } //   else console.log(birthday + ' day' + (birthday > 1 ? 's' : '') + ' left until' + ` ${person.firstName}'s birthday`);
-
-
         return `
-        <tr data-id="${person.id}" name="${person.firstName}"  class="${index % 2 ? 'even' : 'odds'}" ng-repeat="person in | orderBy:'fromNow' ">
+        <tr data-id="${person.id}" name="${person.firstName}" id="table_row" class="${index % 2 ? `${birthday === 0 ? "birthday" : "even"}` : `${birthday === 0 ? "birthday" : "odds"}`}" ng-repeat="person in | orderBy:'fromNow' ">
         
             <th scope="row">
-                <img src="${person.picture}" alt="${person.firstName + ' ' + person.lastName}"/>
+                <img class="${index % 2 ? `even_img` : `odd_img`}" src="${person.picture}" alt="${person.firstName + ' ' + person.lastName}"/>
             </th>
             <td>
                 <span>${person.firstName} ${person.lastName}</span><br>
+                <strong>Turns <span class="age">${age}</span> ${birthday === 0 ? "today" : `on ${month} ${date}<sup>${nth(date)}`}</sup></strong>
             </td>
-            <td>
-                <strong>Turns ${age} on ${month} ${date}<sup>${nth(date)}</sup></strong>
-            </td>
-            <td>${birthday + ' day' + (birthday > 1 ? 's' : '')} left until ${person.firstName} ${person.lastName}'s birthday</td>
-            <td>
-                <button class="edit">
-                    <img src="./edit.svg" width="35"/>
-                </button>
-            </td>
-            <td>
-                <button class="delete">
-                    <img src="./delete.svg" width="35"/>
-                </button>
+            <td class="upcoming_birthday">
+                <span>${birthday === 0 ? `<span>Happy birthday ${person.lastName}</span>` : "In " + `<span class="days">${birthday}</span>` + ' day' + (birthday > 1 ? 's' : '')}
+                </span>
+                <div class="buttons">
+                    <button class="edit">
+                        <img src="./edit.svg" width="35"/>
+                    </button>
+                    <button class="delete">
+                        <img src="./delete.svg" width="35"/>
+                    </button>
+                </div>
             </td>
 		</tr>
         `;
@@ -260,7 +251,28 @@ async function go() {
         // Go to this addBirthday function and do what it asks to do
         addBirthday();
       }
-    }; // create an addBirthday function
+    };
+
+    function filterBirthday(e) {
+      let searchValue = searchInput.value;
+      const lowerCaseValue = searchValue.toLowerCase();
+      let personsFilterLastName = persons.filter(person => person.lastName.toLowerCase().includes(lowerCaseValue));
+      displayList(personsFilterLastName);
+    }
+
+    function filterBirthdayByMonth(e) {
+      let selectValue = selectInput.value;
+      const numberedValue = Number(selectValue);
+      console.log("num", numberedValue);
+      let personsFilterMonth = persons.filter(person => new Date(person.birthday).getMonth() === numberedValue);
+      displayList(personsFilterMonth);
+    }
+
+    function filterReset() {
+      searchInput.value = '';
+      selectInput.value = '';
+      displayList(persons);
+    } // create an addBirthday function
 
 
     const addBirthday = () => {
@@ -468,9 +480,11 @@ async function go() {
     window.addEventListener('click', handleAddBirthday);
     displayList(persons);
     window.addEventListener('click', editBirthday);
-    window.addEventListener('click', deleteBirthday); // tbody.addEventListener('updatePeopleList', showPeople);
-  } // displayPeople();
-  // save to local storage
+    window.addEventListener('click', deleteBirthday);
+    searchInput.addEventListener('input', filterBirthday);
+    selectInput.addEventListener('input', filterBirthdayByMonth);
+    resetFilterButton.addEventListener('click', filterReset);
+  } // save to local storage
 
 
   function initLocalStorage() {
@@ -523,7 +537,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61940" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58848" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

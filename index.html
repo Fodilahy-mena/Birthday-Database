@@ -11,20 +11,21 @@
 	<body>
 		<header>
 			<div>
-				<h1>Birthday App
-					<i class="cacke">
+				<h1>
+					Birthday App
+					<!-- <i class="cacke">
 						<img src="./cacke.svg" width="60">
-					</i>
+					</i> -->
 				</h1>
 				
 			</div>
 			<p>List of people, sorted by the ones who will have their birthday the soonest.</p>
 			
 			<form class="form-inline">
-				<button type="button" class="btn btn-primary add">Add new birthday list</button>
-				<input class="form-control search" type="text" placeholder="Search" aria-label="Search">
+				<button type="button" class="btn add">Add somebody</button>
+				<input id="search" class=" search" type="text" placeholder="Search" aria-label="Search">
 				  
-				<select class="form-control select" aria-labelledby="dropdownMenuLink">
+				<select class="select" aria-labelledby="dropdownMenuLink">
 					<option value="">Select month to filter</option>
 					<option value="0">January</option>
 					<option value="1">February</option>
@@ -39,12 +40,12 @@
 					<option value="10">November</option>
 					<option value="11">December</option>
 				</select>
-				<button type="button" class="form-control bg-success text-white reset-filters">Reset filters</button>
+				<button type="button" class=" bg-success text-white reset-filters">Reset filters</button>
 			</form>
 		</header>
 		<div class="table-responsive">
 			<table class="table">
-				<thead>
+				<!-- <thead>
 				  <tr>
 					<th scope="col">Avatar</th>
 					<th scope="col">
@@ -56,7 +57,7 @@
 						Edite and Delete
 					</th>
 				  </tr>
-				</thead>
+				</thead> -->
 				<tbody>
 				  
 				</tbody>

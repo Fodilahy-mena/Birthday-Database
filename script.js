@@ -16,7 +16,6 @@ async function destroyPopup(popup) {
     // remove it from the js memory
     popup = null;
 }
-
 // async await function for the Promis to go
 async function go() {
 
