@@ -1,17 +1,15 @@
 body {
-	/* background-color: #fef6e4; */
 	background: #D8EEFE;
 	font-size: 18px;
 	font-family: Poppins;
 	margin: 16px;
 }
-@media (min-width: 779px) {
-	body {
-		max-width: 70%;
-		min-width: 70%;
-		margin: auto;
-	}
-}
+
+body.open {
+	height: 100vh;
+	overflow-y: hidden;
+  }
+
 body > header > form {
 	display: flex;
 	gap: 20px;
@@ -23,14 +21,14 @@ body > header > div {
 	margin-top: 2rem;
 	
 }
+
 h1 {
 	margin: 0;
-	/* text-transform: uppercase; */
 	font-family: Poppins;
 	font-style: normal;
 	font-weight: bold;
-	font-size: 64px;
-	line-height: 76px;
+	font-size: 2.5rem;
+    line-height: 100%;
 /* identical to box height */
 	color: #094067;
 	
@@ -64,29 +62,39 @@ h1 {
 	outline: none;
 	cursor: pointer;
 }
-thead {
-	background-color:#EF4565;
-	background-repeat: no-repeat;
-	background-size: cover;
+
+
+.cards {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 1rem;
+	max-width: 100%;
+    min-width: 100%;
 }
-th img {
+
+.card_item {
+	background: #FFFFFE;
+	border-radius: 5px;
+	display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+	padding: 2% 5%;
+	gap: 16px;
+	margin-bottom: 32px;
+} 
+
+.item_fig {
+	margin: 0;
+}
+
+
+.item_fig img {
 	width: 100px;
 	border-radius: 5px;
 }
 
 
-.table td, .table th {
-    padding: .75rem;
-    vertical-align: middle;
-    border-top: none;
-}
-.table {
-	max-width: 100%;
-    min-width: 100%;
-}
-thead {
-	color: white;
-}
 
 button {
     border: none;
@@ -117,37 +125,26 @@ button {
 	color:  #f86781;
 }
 
-.table tr {
-	border: 2px red solid;
-    border-radius: 10px;
-}
-.table td, .table th {
-	padding: 25px;
-}
-
-table {
-    border-collapse: separate;
-    border-spacing:0 31px;
-}
 .upcoming_birthday {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: stretch;
+	align-self: flex-start;
 }
 .upcoming_birthday > span {
 	align-self: flex-end;
 	font-weight: 500;
-	font-size: 24px;
-	line-height: 28px;
+	font-size: 18px;
+	line-height: normal;
 
 	color: #5F6C7B;
 }
 
 .name {
 	font-weight: 500;
-	font-size: 36px;
-	line-height: 43px;
+	font-size: 20px;
+	line-height: normal;
 	/* identical to box height */
 	color: #000000;
 
@@ -155,8 +152,8 @@ table {
 
 .turning_age {
 	font-weight: 500;
-	font-size: 24px;
-	line-height: 28px;
+	font-size: 18px;
+	line-height: normal;
 
 	color: #5F6C7B;
 
@@ -172,7 +169,6 @@ table {
 	transition: all 0.25s;
 	top: 0;
 	display: grid;
-	justify-content: center;
 	align-items: center;
 	pointer-events: none;
 	opacity: 0;
@@ -191,12 +187,19 @@ table {
   }
 
 .popup fieldset {
-	padding: 2rem;
+	padding: 0;
 	border: 2px solid whitesmoke;
 	background-color: white;
 	border-radius: 5px;
 	transition: all 0.2s;
-	box-shadow: 0px 0px 0 #899CD5, 1px 1px 0 #c4d1fa, 2px 2px 0 #f14be9, 3px 3px 0 #6F82BB;
+    margin: auto;
+	/* box-shadow: 0px 0px 0 #899CD5, 1px 1px 0 #c4d1fa, 2px 2px 0 #f14be9, 3px 3px 0 #6F82BB; */
+}
+
+.popup fieldset > div {
+	display: flex;
+	flex-direction: column;
+	margin: 2rem;
 }
 
 .popup.open {
@@ -208,11 +211,9 @@ table {
 }
 
 .popup button {
-	background-color: blue;
 	position:relative;
-	background-image: linear-gradient(bottom, rgb(70, 71, 68) 0%, rgb(58, 58, 58) 100%);
-	box-shadow: inset 0px 1px 0px #404140, 0px 6px 0px #4d4e4d;
-	color: white;
+	box-shadow: inset 0px 0px 2px #404140, 0px 6px 0px #4d4e4d;
+	background: #FFFFFF;
 	padding: 14px 20px;
 	margin: 8px 0;
 	border: none;
@@ -242,6 +243,7 @@ table {
 }
 .popup button:hover {
 	background-color: red;
+	color: #FFFFFF;
 }
 
 fieldset {
@@ -250,15 +252,16 @@ fieldset {
 
 input {
 	padding: 8px;
-	border: 1px solid brown;
+	border: none;
+	background: #D8EEFE;
 	font-size: 16px;
-	color: gray;
+	color: #094067;
 	border-radius: 5px;
 }
 .popup strong {
 	font-size: 20px;
 	font-weight: 700;
-	color: goldenrod;
+	color: #EF4565;
 
 }
 
@@ -269,8 +272,63 @@ input {
     vertical-align: middle;
 }
 
-  .buttons {
+.buttons {
 	display: flex;
-    justify-content: flex-end;
-    gap: 16px;
-  }
+	justify-content: flex-end;
+	gap: 16px;
+}
+.form-inline {
+	align-items: flex-end;
+}
+.form-inline p {
+	font-style: normal;
+	font-weight: 500;
+	font-size: 18px;
+	line-height: 21px;
+	text-align: left;
+	color: #094067;
+}
+
+.close {
+	width: 30px;
+	height: 30px;
+	align-self: flex-end;
+	cursor: pointer;
+}
+
+@media (min-width: 779px) {
+	body {
+		max-width: 70%;
+		min-width: 70%;
+		margin: auto;
+	}
+
+	h1 {
+		font-size: 64px;
+		line-height: 76px;
+	}
+
+	.popup fieldset {
+		width: 70%;
+	}
+
+	.popup fieldset > div {
+		max-width: 70%;
+		margin: auto;
+		margin-top: 60px;
+		margin-bottom: 60px;
+	}
+	.upcoming_birthday > span {
+		font-size: 24px;
+		line-height: 28px;
+	}
+	.name {
+		font-size: 36px;
+		line-height: 43px;
+	}
+
+	.turning_age {
+		font-size: 24px;
+		line-height: 28px;
+	}
+}

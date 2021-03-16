@@ -1,5 +1,7 @@
+
 // Get the table body from html
-const tbody = document.querySelector('tbody');
+
+const cards = document.querySelector('.cards');
 
 function wait(ms = 0) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -16,6 +18,20 @@ async function destroyPopup(popup) {
     // remove it from the js memory
     popup = null;
 }
+
+// avoid background scrolling when a modal appears
+function hideScrollBar() {
+    const body = document.body;
+        body.style.height = '100vh';
+        body.style.overflowY = 'hidden';
+}
+
+function resetScrollBar() {
+    const body = document.body;
+    body.style.height = 'unset';
+    body.style.overflowY = 'unset';
+}
+
 // async await function for the Promis to go
 async function go() {
 
@@ -56,7 +72,7 @@ const sortedPeople = persons.sort(function(a, b) {
 function displayList(persons) {
     
         // insert the table row as an inner html in the table body
-        tbody.innerHTML = persons
+        cards.innerHTML = persons
         // pass a parameter persons to get the data which has been fetched
         // and map it in order to access all the keys and values from it
         .map((person, index) => { // this index callback is just for css styling in this case
@@ -115,30 +131,30 @@ function displayList(persons) {
               
             
         return`
-        <tr data-id="${person.id}" name="${person.firstName}" id="table_row" class="${index % 2 ? `${birthday === 0 ? "birthday" : "even"}` : `${birthday === 0 ? "birthday" : "odds"}`}" ng-repeat="person in | orderBy:'fromNow' ">
+        <div data-id="${person.id}" name="${person.firstName}" class="card_item ${index % 2 ? `${birthday === 0 ? "birthday" : "even"}` : `${birthday === 0 ? "birthday" : "odds"}`}" ng-repeat="person in | orderBy:'fromNow' ">
         
-            <th scope="row">
+            <figure class="item_fig">
                 <img class="${index % 2 ? `even_img` : `odd_img`}" src="${person.picture}" alt="${person.firstName + ' ' + person.lastName}"/>
-            </th>
-            <td>
+            </figure>
+            <div class="item_row">
                 <span class="name">${person.firstName} ${person.lastName}</span><br>
                 <strong class="turning_age">Turns <span class="age">${age}</span> ${birthday === 0 ? "today" : `on ${month} ${date}<sup>${nth(date)}`}</sup></strong>
-            </td>
-            <td class="upcoming_birthday">
+            </div>
+            <div class="item_row upcoming_birthday">
                 <span>${birthday === 0 
                     ? `<span>Happy birthday</span>` 
                     : "In " + `<span class="days">${ birthday}</span>` + ' day' + (birthday > 1 ? 's' : '')}
                 </span>
                 <div class="buttons">
                     <button class="edit">
-                        <img src="./edit.svg" width="35"/>
+                        <img src="./images/edit.svg" width="35"/>
                     </button>
                     <button class="delete">
-                        <img src="./delete.svg" width="35"/>
+                        <img src="./images/delete.svg" width="35"/>
                     </button>
                 </div>
-            </td>
-		</tr>
+            </div>
+		</div>
         `;
     }).join('');
     }
@@ -149,13 +165,14 @@ const handleAddBirthday = (e) => {
     if (e.target.closest('button.add')) {
         // Go to this addBirthday function and do what it asks to do
         addBirthday();
+        hideScrollBar();
     }
 }
 function filterBirthday(e) {
     let searchValue = searchInput.value;
     const lowerCaseValue = searchValue.toLowerCase();
-    
-    let personsFilterLastName = persons.filter(person => person.lastName.toLowerCase().includes(lowerCaseValue));
+    // filter by either firstName or lastName
+    let personsFilterLastName = persons.filter(person => person.lastName.toLowerCase().includes(lowerCaseValue) || person.firstName.toLowerCase().includes(lowerCaseValue));
     displayList(personsFilterLastName);
 }
 
@@ -194,17 +211,21 @@ const addBirthday = () => {
         popupAddList.insertAdjacentHTML(
             'afterbegin', 
             `<fieldset>
-                <label>Enter first name</label>
-                <input type="text" value="" name="first">
-                <label>Enter last name</label>
-                <input type="text" value="" name="last">
-                <label>Enter your birthday date</label>
-                <input type="date" value="" name="date">
-                <label>Avatar image</label>
-                <input type="text" value="" name="picUrl">
-                <div class="options-btn">
-                    <button type="button" class="cancel" name="cancel">Cancel</button>
-                    <button type="submit" class="submit_form">Submit</button>
+                <div>
+                    <img class="close" name="close" src="./images/close.svg" alt="close popup"/>
+                    <h2>Add a new person</h2>
+                    <label>Enter first name</label>
+                    <input type="text" value="" name="first">
+                    <label>Enter last name</label>
+                    <input type="text" value="" name="last">
+                    <label>Enter your birthday date</label>
+                    <input type="date" value="" name="date">
+                    <label>Avatar image</label>
+                    <input type="text" value="" name="picUrl">
+                    <div class="options-btn">
+                        <button type="button" class="cancel" name="cancel">Cancel</button>
+                        <button type="submit" class="submit_form">Submit</button>
+                    </div>
                 </div>
             </fieldset>
         `);
@@ -216,7 +237,18 @@ const addBirthday = () => {
             cancelButton.addEventListener('click', () => {
                 resolve(null);
                 destroyPopup(popupAddList);
-                
+                resetScrollBar();
+            }, { once: true });
+        }
+
+        if(popupAddList.close) {
+            const closeButton = popupAddList.close;
+            console.log("Closed",closeButton);
+            // demolishe the popup form when click on the name "cancel" button
+            closeButton.addEventListener('click', () => {
+                resolve(null);
+                destroyPopup(popupAddList);
+                resetScrollBar();
             }, { once: true });
         }
 
@@ -241,13 +273,14 @@ const addBirthday = () => {
             // reset the form when that is done
             formEl.reset();
             // use dispacth event for our own event to listen for
-            tbody.dispatchEvent(new CustomEvent('updatePeopleList'));
+            triggerLocalStoragerUpdate();
             // whatever is entered, the local storage should save it
-            localStorage.setItem('persons', JSON.stringify(sortedPeople));
+            updateLocalPerson(sortedPeople);
             // call the displayList fonction so that the new object will appear on the browser -
             // when it is pushed.
             displayList(sortedPeople);
             destroyPopup(popupAddList);
+            resetScrollBar();
             
         }, { once: true });
         console.log(popupAddList);
@@ -260,23 +293,27 @@ const addBirthday = () => {
 
 const editBirthday = (e) => {
         if (e.target.closest('button.edit')) {
-            const tableRow = e.target.closest('tr');
+            const tableRow = e.target.closest('.card_item');
             const id = tableRow.dataset.id;
             editBirthdayPopup(id);
+            hideScrollBar();
         }
     }
 
 const deleteBirthday = (e) => {
         if (e.target.closest('button.delete')) {
-            const tableRow = e.target.closest('tr');
+            const tableRow = e.target.closest('.card_item');
             const id = tableRow.dataset.id;
-            deleteBirthdayPopup(id)
+            deleteBirthdayPopup(id);
+            hideScrollBar();
         }
     }
     
 const editBirthdayPopup = (id) => {
         const  birthdayToEdit = persons.find(person => person.id == id);
         console.log(birthdayToEdit);
+        const birthdayDate = new Date(birthdayToEdit.birthday).toISOString().split('T')[0];
+        console.log(birthdayDate)
         return new Promise(async function(resolve) {
     
             const popupEditeList = document.createElement('form');
@@ -284,17 +321,21 @@ const editBirthdayPopup = (id) => {
             popupEditeList.insertAdjacentHTML(
                 'afterbegin', 
                 `<fieldset>
-                    <label>Last name</label>
-                    <input type="text" value="${birthdayToEdit.firstName}" name="lastName">
-                    <label>First name</label>
-                    <input type="text" value="${birthdayToEdit.lastName}" name="firstName">
-                    <label>Birthday (datepicker)</label>
-                    <input type="date" value="${birthdayToEdit.birthday}" name="birthday">
-                    <label>Avatar image</label>
-                    <input type="url" value="${birthdayToEdit.picture}" name="avatarUrl">
-                    <div class="options-btn">
-                        <button type="button" class="cancel" name="cancel">Cancel</button>
-                        <button type="submit" class="confirmed">Save</button>
+                    <div>
+                        <img class="close" name="close" src="./images/close.svg" alt="close popup"/>
+                        <h2>Edit ${birthdayToEdit.firstName} ${birthdayToEdit.lastName}</h2>
+                        <label>Last name</label>
+                        <input type="text" value="${birthdayToEdit.firstName}" name="lastName">
+                        <label>First name</label>
+                        <input type="text" value="${birthdayToEdit.lastName}" name="firstName">
+                        <label>Birthday (datepicker)</label>
+                        <input type="date" value="${birthdayDate}" name="birthday">
+                        <label>Avatar image</label>
+                        <input type="url" value="${birthdayToEdit.picture}" name="avatarUrl">
+                        <div class="options-btn">
+                            <button type="button" class="cancel" name="cancel">Cancel</button>
+                            <button type="submit" class="confirmed">Save</button>
+                        </div>
                     </div>
                 </fieldset>
             `);
@@ -305,8 +346,21 @@ const editBirthdayPopup = (id) => {
             		console.log('cancel');
                     resolve(null);
                     destroyPopup(popupEditeList);
+                    resetScrollBar();
             	}, { once: true });
             }
+
+            if(popupEditeList.close) {
+            	console.log(popupEditeList.close);
+                const closeButton = popupEditeList.close;
+                closeButton.addEventListener('click', () => {
+            		console.log('close');
+                    resolve(null);
+                    destroyPopup(popupEditeList);
+                    resetScrollBar();
+            	}, { once: true });
+            }
+
             popupEditeList.addEventListener('submit', (e) => {
             	e.preventDefault();
                 birthdayToEdit.lastName = popupEditeList.lastName.value;
@@ -316,10 +370,12 @@ const editBirthdayPopup = (id) => {
             	displayList(sortedPeople);
                 resolve(e.currentTarget.remove());
             	destroyPopup(popupEditeList);
-                
+                triggerLocalStoragerUpdate();
+                resetScrollBar();
             }, { once: true });
         resolve(document.body.appendChild(popupEditeList));
         popupEditeList.classList.add('open');
+        console.log("birthday date",birthdayToEdit.birthday)
         
     });
     };
@@ -332,10 +388,13 @@ const editBirthdayPopup = (id) => {
             popupDeleteList.insertAdjacentHTML(
                 'afterbegin', 
                 `<fieldset>
-                    <p>Are you sure you want to delete <strong>${birthdayToDelete.lastName}?</strong></p>
-                    <div class="options-btn">
-                        <button type="button" class="cancel" name="cancel">Cancel</button>
-                        <button type="submit" name="delete" class="confirmed">OK</button>
+                    <div>
+                        <img class="close" name="close" src="./images/close.svg" alt="close popup"/>
+                        <p>Are you sure you want to delete <strong>${birthdayToDelete.lastName}?</strong></p>
+                        <div class="options-btn">
+                            <button type="button" class="cancel" name="cancel">Cancel</button>
+                            <button type="submit" name="delete" class="confirmed">OK</button>
+                        </div>
                     </div>
                 </fieldset>
             `);
@@ -346,7 +405,18 @@ const editBirthdayPopup = (id) => {
                 skipButton.addEventListener('click', () => {
                     resolve(null);
                     destroyPopup(popupDeleteList);
-                    
+                    hideScrollBar();
+                }, { once: true });
+    
+            }
+
+            if(popupDeleteList.close) {
+                const closeButton = popupDeleteList.close;
+                console.log(closeButton);
+                closeButton.addEventListener('click', () => {
+                    resolve(null);
+                    destroyPopup(popupDeleteList);
+                    resetScrollBar();
                 }, { once: true });
     
             }
@@ -358,11 +428,12 @@ const editBirthdayPopup = (id) => {
                 persons = deletePersonBirthday;
                 console.log(deletePersonBirthday);
                 sortedPeople.splice();
-                localStorage.setItem('persons',JSON.stringify(deletePersonBirthday));
+                updateLocalPerson(deletePersonBirthday);
                 displayList(deletePersonBirthday);
                 destroyPopup(popupDeleteList);
                 console.log(sortedPeople);
                 }
+                resetScrollBar();
             }, { once: true });
             
             if(popupDeleteList.delete) {
@@ -370,6 +441,7 @@ const editBirthdayPopup = (id) => {
                 skipButton.addEventListener('click', () => {
                     resolve(null);
                     destroyPopup(popupDeleteList);
+                    resetScrollBar();
                 }, { once: true });
             }
             resolve(document.body.appendChild(popupDeleteList));
@@ -395,14 +467,21 @@ function initLocalStorage() {
         persons = saveBirtdayList;
         displayPeople(persons);
     }
-    tbody.dispatchEvent(new CustomEvent('updatePeopleList'));
+    triggerLocalStoragerUpdate();
+}
+
+function triggerLocalStoragerUpdate() {
+    cards.dispatchEvent(new CustomEvent('updatePeopleList'));
+}
+function updateLocalPerson(newPersons) {
+    localStorage.setItem('persons',JSON.stringify(newPersons));
 }
 //update the local storage when there is any change
 function updateToLocalStorage() {
-    localStorage.setItem('persons', JSON.stringify(persons));
+    updateLocalPerson(persons);
 }
 
-tbody.addEventListener('updatePeopleList', updateToLocalStorage);
+cards.addEventListener('updatePeopleList', updateToLocalStorage);
 initLocalStorage();
 
 };

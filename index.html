@@ -3,66 +3,54 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>TEST</title>
+		<title>Birthday App</title>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 		<link rel="stylesheet" href="./style.css">
+		<link rel="shortcut icon" href="./images/favorite_icon.png" type="image/x-icon">
 	</head>
 	<body>
 		<header>
 			<div>
 				<h1>
 					Birthday App
-					<!-- <i class="cacke">
-						<img src="./cacke.svg" width="60">
-					</i> -->
 				</h1>
 				
 			</div>
-			<p>List of people, sorted by the ones who will have their birthday the soonest.</p>
 			
 			<form class="form-inline">
+				<div>
+					<p>Filter by name</p>
+					<input id="search" class=" search" type="text" placeholder="Type a name" aria-label="Search">
+				</div>
+				<div>
+					<p>Filter by month</p>
+					<select class="select" aria-labelledby="dropdownMenuLink">
+						<option value="">Select month to filter</option>
+						<option value="0">January</option>
+						<option value="1">February</option>
+						<option value="2">March</option>
+						<option value="3">April</option>
+						<option value="4">May</option>
+						<option value="5">June</option>,
+						<option value="6">July</option>
+						<option value="7">August</option>
+						<option value="8">September</option>
+						<option value="9">October</option>
+						<option value="10">November</option>
+						<option value="11">December</option>
+					</select>
+				</div>
+		
 				<button type="button" class="btn add">Add somebody</button>
-				<input id="search" class=" search" type="text" placeholder="Search" aria-label="Search">
-				  
-				<select class="select" aria-labelledby="dropdownMenuLink">
-					<option value="">Select month to filter</option>
-					<option value="0">January</option>
-					<option value="1">February</option>
-					<option value="2">March</option>
-					<option value="3">April</option>
-					<option value="4">May</option>
-					<option value="5">June</option>,
-					<option value="6">July</option>
-					<option value="7">August</option>
-					<option value="8">September</option>
-					<option value="9">October</option>
-					<option value="10">November</option>
-					<option value="11">December</option>
-				</select>
 				<button type="button" class=" bg-success text-white reset-filters">Reset filters</button>
 			</form>
 		</header>
-		<div class="table-responsive">
-			<table class="table">
-				<!-- <thead>
-				  <tr>
-					<th scope="col">Avatar</th>
-					<th scope="col">
-						<span>Name<span><br>
-						<span>Turning age based on upcoming birthday</span>
-					</th>
-					<th scope="col">
-						<span>Upcoming birthday</span><br>
-						Edite and Delete
-					</th>
-				  </tr>
-				</thead> -->
-				<tbody>
-				  
-				</tbody>
-			</table>
-		  </div>
+		<section class="cards">
+			<div class="card_list">
+				
+			</div>
+		</section>
 		<script src="script.js" type="module"></script>
 	</body>
 </html>
