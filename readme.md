@@ -52,7 +52,7 @@ First of all I will be going a little bit more about the `displayPeople()` funct
 
 1. Inside the `handleAddBirthday()` function, I utilized a `e.target.closest()` methode to check if a user click on a button that has an `add` class and if that is true, apply this `addBirthday()`. Then listen for a click event on the window to handle this `handleAddBirthday()` function in line 335. 
     1. In the `addBirthday()` function, there is a form inputs that require some values from the user and push taht values to the fetched `people.json` if the user submit the form. Otherwise it dosen't do anything when user click on cancel button but destroying the form - form that behaves like a prompt.
-2. This `displayList` function from line 131 to 212 is displaying the data from fetched `people.json` to html file. A map() methode is used here to access each component of each person to a list. But in my case I used table rows instead of list items - just a matter of html and css prefference. 
+2. This `displayList` function is displaying the data from fetched `people.json` to html file. A map() methode is used here to access each component of each person to a list. But in my case I used table rows instead of list items - just a matter of html and css prefference. 
     1. Since date.fns is not really accessible for me, I used js new Date() trick to get the how old the person is and how many days left before their upcoming birthday. It does a little bit with it but it is right.
 
 3. The `editBirthdayPopup()` is a edit popup form for the user to be able to convert their info from the birthday app. For example, changing their birthday date, First name, Last name, Avatar picture because sometimes there could be any misspelling or wrong date when entering them. Then the user can click on save button to submit their changes to the list if they are happy with it.
@@ -63,7 +63,6 @@ First of all I will be going a little bit more about the `displayPeople()` funct
 ### Improvements
 
 - We had quite a plenty of time to accomplish the project but it is only challenging.
-The changes that I made can't be saved in the local storage - meaning, it goes back as it was after refreshing the page.
 
 ### Experience
 

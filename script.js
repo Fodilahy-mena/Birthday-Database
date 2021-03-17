@@ -1,5 +1,5 @@
 
-// Get the table body from html
+// Get the section element by class cards from html
 
 const cards = document.querySelector('.cards');
 
@@ -71,7 +71,7 @@ const sortedPeople = persons.sort(function(a, b) {
     // create a displayLyst function to display the data frome the people.json
 function displayList(persons) {
     
-        // insert the table row as an inner html in the table body
+        // insert the table row as an inner html in the section
         cards.innerHTML = persons
         // pass a parameter persons to get the data which has been fetched
         // and map it in order to access all the keys and values from it
@@ -165,6 +165,7 @@ const handleAddBirthday = (e) => {
     if (e.target.closest('button.add')) {
         // Go to this addBirthday function and do what it asks to do
         addBirthday();
+        // avoid scrolling
         hideScrollBar();
     }
 }
@@ -176,13 +177,10 @@ function filterBirthday(e) {
     displayList(personsFilterLastName);
 }
 
-function filterBirthdayByMonth(e) {
+function filterBirthdayByMonth() {
     let selectValue = selectInput.value;
     const numberedValue = Number(selectValue);
-    console.log("num",numberedValue)
-    
     let personsFilterMonth = persons.filter(person => new Date(person.birthday).getMonth() === numberedValue);
-    
     displayList(personsFilterMonth);
 }
 function filterReset() {
@@ -196,8 +194,7 @@ const addBirthday = () => {
     // to the persons array object from the person.json
 
     // create a new variable and assign the sortedPeople to it
-    const  birthdayToAdd = sortedPeople;
-        console.log(birthdayToAdd);
+
         return new Promise(async function(resolve) {
         
         console.log('Add button');
@@ -232,22 +229,22 @@ const addBirthday = () => {
             // inside of the form popup that was created, if cancel is true .....
         if(popupAddList.cancel) {
             const cancelButton = popupAddList.cancel;
-            console.log("Canceled",cancelButton);
             // demolishe the popup form when click on the name "cancel" button
             cancelButton.addEventListener('click', () => {
                 resolve(null);
                 destroyPopup(popupAddList);
+                // show scroll bar
                 resetScrollBar();
             }, { once: true });
         }
 
         if(popupAddList.close) {
             const closeButton = popupAddList.close;
-            console.log("Closed",closeButton);
             // demolishe the popup form when click on the name "cancel" button
             closeButton.addEventListener('click', () => {
                 resolve(null);
                 destroyPopup(popupAddList);
+                // show scroll bar
                 resetScrollBar();
             }, { once: true });
         }
@@ -266,8 +263,6 @@ const addBirthday = () => {
                 id: Date.now(),
             };
 
-
-            console.log(newBirthdayList);
             // push the new object into the sortedPeople array object
             sortedPeople.push(newBirthdayList);
             // reset the form when that is done
@@ -296,6 +291,7 @@ const editBirthday = (e) => {
             const tableRow = e.target.closest('.card_item');
             const id = tableRow.dataset.id;
             editBirthdayPopup(id);
+            // avoid scrolling
             hideScrollBar();
         }
     }
@@ -305,15 +301,16 @@ const deleteBirthday = (e) => {
             const tableRow = e.target.closest('.card_item');
             const id = tableRow.dataset.id;
             deleteBirthdayPopup(id);
+            // avoid scrolling
             hideScrollBar();
         }
     }
     
 const editBirthdayPopup = (id) => {
         const  birthdayToEdit = persons.find(person => person.id == id);
-        console.log(birthdayToEdit);
+        
         const birthdayDate = new Date(birthdayToEdit.birthday).toISOString().split('T')[0];
-        console.log(birthdayDate)
+    
         return new Promise(async function(resolve) {
     
             const popupEditeList = document.createElement('form');
@@ -343,9 +340,10 @@ const editBirthdayPopup = (id) => {
             	console.log(popupEditeList.cancel);
                 const skipButton = popupEditeList.cancel;
                 skipButton.addEventListener('click', () => {
-            		console.log('cancel');
+            		console.log('canceled');
                     resolve(null);
                     destroyPopup(popupEditeList);
+                    // show scroll bar
                     resetScrollBar();
             	}, { once: true });
             }
@@ -354,7 +352,7 @@ const editBirthdayPopup = (id) => {
             	console.log(popupEditeList.close);
                 const closeButton = popupEditeList.close;
                 closeButton.addEventListener('click', () => {
-            		console.log('close');
+            		console.log('closed');
                     resolve(null);
                     destroyPopup(popupEditeList);
                     resetScrollBar();
@@ -371,6 +369,7 @@ const editBirthdayPopup = (id) => {
                 resolve(e.currentTarget.remove());
             	destroyPopup(popupEditeList);
                 triggerLocalStoragerUpdate();
+                // show scroll bar
                 resetScrollBar();
             }, { once: true });
         resolve(document.body.appendChild(popupEditeList));
