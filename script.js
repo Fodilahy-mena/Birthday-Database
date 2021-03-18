@@ -169,10 +169,14 @@ const handleAddBirthday = (e) => {
         hideScrollBar();
     }
 }
+function filterByNameAndMonth() {
+    
+}
 function filterBirthday(e) {
+    // get the value of the search input
     let searchValue = searchInput.value;
     const lowerCaseValue = searchValue.toLowerCase();
-    // filter by either firstName or lastName
+    // filter by either firstName or lastName and birthday month
     let personsFilterLastName = persons.filter(person => person.lastName.toLowerCase().includes(lowerCaseValue) || person.firstName.toLowerCase().includes(lowerCaseValue));
     displayList(personsFilterLastName);
 }
@@ -198,6 +202,9 @@ const addBirthday = () => {
         return new Promise(async function(resolve) {
         
         console.log('Add button');
+        // maximum date, avoid user selecting on future date
+        const maximumDate = new Date().toISOString().slice(0,10);
+
         // Create a form element to popup when the condition is completed
         const popupAddList = document.createElement('form');
         // add class "popup"
@@ -216,7 +223,7 @@ const addBirthday = () => {
                     <label>Enter last name</label>
                     <input type="text" value="" name="last">
                     <label>Enter your birthday date</label>
-                    <input type="date" value="" name="date">
+                    <input type="date" value="" name="date" max = ${maximumDate}>
                     <label>Avatar image</label>
                     <input type="text" value="" name="picUrl">
                     <div class="options-btn">
@@ -249,11 +256,15 @@ const addBirthday = () => {
             }, { once: true });
         }
 
+        // const dateInput = document.querySelector('input[type=date]').max = new Date().toISOString().slice(0,10);
+        //     console.log(dateInput);
+
         // listen for a submit button on the popup form
         popupAddList.addEventListener('submit', (e) => {
             e.preventDefault();
             console.log("submit form");
             const formEl = e.currentTarget;
+            
             // create a new object
             const newBirthdayList = {
                 birthday: formEl.date.value,
@@ -310,9 +321,12 @@ const editBirthdayPopup = (id) => {
         const  birthdayToEdit = persons.find(person => person.id == id);
         
         const birthdayDate = new Date(birthdayToEdit.birthday).toISOString().split('T')[0];
-    
+        
+        // maximum date, avoid user selecting on future date
+        const maximumDate = new Date().toISOString().slice(0,10);
+
         return new Promise(async function(resolve) {
-    
+            
             const popupEditeList = document.createElement('form');
             popupEditeList.classList.add('popup');
             popupEditeList.insertAdjacentHTML(
@@ -326,7 +340,7 @@ const editBirthdayPopup = (id) => {
                         <label>First name</label>
                         <input type="text" value="${birthdayToEdit.lastName}" name="firstName">
                         <label>Birthday (datepicker)</label>
-                        <input type="date" value="${birthdayDate}" name="birthday">
+                        <input type="date" value="${birthdayDate}" max=${maximumDate} name="birthday">
                         <label>Avatar image</label>
                         <input type="url" value="${birthdayToEdit.picture}" name="avatarUrl">
                         <div class="options-btn">
