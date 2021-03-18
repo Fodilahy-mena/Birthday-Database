@@ -170,22 +170,22 @@ const handleAddBirthday = (e) => {
     }
 }
 function filterByNameAndMonth() {
-    
+    const filteredByMonth = filterBirthdayByMonth(persons);
+    const filteredByNameAndMonth = filterBirthdayByName(filteredByMonth);
+    displayList(filteredByNameAndMonth);
 }
-function filterBirthday(e) {
+function filterBirthdayByName(personsData) {
     // get the value of the search input
     let searchValue = searchInput.value;
     const lowerCaseValue = searchValue.toLowerCase();
     // filter by either firstName or lastName and birthday month
-    let personsFilterLastName = persons.filter(person => person.lastName.toLowerCase().includes(lowerCaseValue) || person.firstName.toLowerCase().includes(lowerCaseValue));
-    displayList(personsFilterLastName);
+    return personsData.filter(person => person.lastName.toLowerCase().includes(lowerCaseValue) || person.firstName.toLowerCase().includes(lowerCaseValue));
 }
 
-function filterBirthdayByMonth() {
+function filterBirthdayByMonth(personsData) {
     let selectValue = selectInput.value;
     const numberedValue = Number(selectValue);
-    let personsFilterMonth = persons.filter(person => new Date(person.birthday).getMonth() === numberedValue);
-    displayList(personsFilterMonth);
+    return personsData.filter(person => new Date(person.birthday).getMonth() === numberedValue);
 }
 function filterReset() {
     searchInput.value = '';
@@ -467,8 +467,8 @@ const editBirthdayPopup = (id) => {
     displayList(persons);
     window.addEventListener('click', editBirthday);
     window.addEventListener('click', deleteBirthday);
-    searchInput.addEventListener('input', filterBirthday);
-    selectInput.addEventListener('input', filterBirthdayByMonth);
+    searchInput.addEventListener('input', filterByNameAndMonth);
+    selectInput.addEventListener('input', filterByNameAndMonth);
     resetFilterButton.addEventListener('click', filterReset)
 }
 
