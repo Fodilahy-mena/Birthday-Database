@@ -39,13 +39,10 @@ async function go() {
     // a response variable and await it with fetched variable
     let data = await response.json();
     let persons = data;
-    console.log(data);
     
-
-
 async function displayPeople() {
 
-const sortedPeople = persons.sort(function(a, b) {
+const sortedPeople = persons.sort((a, b) => {
     function peopleBirthday(month, day) {
 
         let now = new Date(),
@@ -97,7 +94,7 @@ function displayList(persons) {
             // Change the person's birthday timestamp number into a normal date,
             // it may include time zone
             let timestamp_to_date = new Date(person.birthday);
-
+            
             // take the only date not with time zone or anything by using getDate()
             const date = timestamp_to_date.getDate();
 
@@ -107,13 +104,12 @@ function displayList(persons) {
             "July", "August", "September", "October", "November", "December"
             ][timestamp_to_date.getMonth()];
 
-            // get that date today
-            let today = new Date();
             // take the year of today and  subtracts it with the year of when the peron was born -
             // to get how old is the person
-            let age = today.getFullYear() - timestamp_to_date.getFullYear() + 1;
             
-           
+            let birthday = peopleBirthday(timestamp_to_date.getMonth()+1,timestamp_to_date.getDate());
+            
+            const ageInYears = birthday === 0 ? 0 : Math.ceil(  (Date.now() - timestamp_to_date) / 365 / 24 / 60 / 60 / 1000);
             function peopleBirthday(month, day) {
 
                 let now = new Date(),
@@ -127,8 +123,6 @@ function displayList(persons) {
                 return Math.round((next - now) / 8.64e7);
             }
               
-              let birthday = peopleBirthday(timestamp_to_date.getMonth()+1,timestamp_to_date.getDate());
-              
             
         return`
         <div data-id="${person.id}" name="${person.firstName}" class="card_item ${index % 2 ? `${birthday === 0 ? "birthday" : "even"}` : `${birthday === 0 ? "birthday" : "odds"}`}" ng-repeat="person in | orderBy:'fromNow' ">
@@ -138,7 +132,7 @@ function displayList(persons) {
             </figure>
             <div class="item_row">
                 <span class="name">${person.firstName} ${person.lastName}</span><br>
-                <strong class="turning_age">Turns <span class="age">${age}</span> ${birthday === 0 ? "today" : `on ${month} ${date}<sup>${nth(date)}`}</sup></strong>
+                <strong class="turning_age">Turns <span class="age">${ageInYears} year${ageInYears > 1 ? 's' : ''} old</span> ${birthday === 0 ? "today" : `on ${month} ${date}<sup>${nth(date)}`}</sup></strong>
             </div>
             <div class="item_row upcoming_birthday">
                 <span>${birthday === 0 
@@ -174,6 +168,7 @@ function filterByNameAndMonth() {
     const filteredByNameAndMonth = filterBirthdayByName(filteredByMonth);
     displayList(filteredByNameAndMonth);
 }
+
 function filterBirthdayByName(personsData) {
     // get the value of the search input
     let searchValue = searchInput.value;
@@ -200,8 +195,6 @@ const addBirthday = () => {
     // create a new variable and assign the sortedPeople to it
 
         return new Promise(async function(resolve) {
-        
-        console.log('Add button');
         // maximum date, avoid user selecting on future date
         const maximumDate = new Date().toISOString().slice(0,10);
 
@@ -262,18 +255,17 @@ const addBirthday = () => {
         // listen for a submit button on the popup form
         popupAddList.addEventListener('submit', (e) => {
             e.preventDefault();
-            console.log("submit form");
             const formEl = e.currentTarget;
             
             // create a new object
             const newBirthdayList = {
-                birthday: formEl.date.value,
+                birthday: +new Date(formEl.date.value),
                 lastName: formEl.last.value,
                 firstName: formEl.first.value,
                 picture: formEl.picUrl.value,
                 id: Date.now(),
             };
-
+            console.log(newBirthdayList)
             // push the new object into the sortedPeople array object
             sortedPeople.push(newBirthdayList);
             // reset the form when that is done
@@ -289,8 +281,7 @@ const addBirthday = () => {
             resetScrollBar();
             
         }, { once: true });
-        console.log(popupAddList);
-
+        
         // appendchild the popup form in the body element in index.html
         resolve(document.body.appendChild(popupAddList));
     });
@@ -339,7 +330,7 @@ const editBirthdayPopup = (id) => {
                         <input type="text" value="${birthdayToEdit.firstName}" name="lastName">
                         <label>First name</label>
                         <input type="text" value="${birthdayToEdit.lastName}" name="firstName">
-                        <label>Birthday (datepicker)</label>
+                        <label>Birthday</label>
                         <input type="date" value="${birthdayDate}" max=${maximumDate} name="birthday">
                         <label>Avatar image</label>
                         <input type="url" value="${birthdayToEdit.picture}" name="avatarUrl">
@@ -351,10 +342,8 @@ const editBirthdayPopup = (id) => {
                 </fieldset>
             `);
             if(popupEditeList.cancel) {
-            	console.log(popupEditeList.cancel);
                 const skipButton = popupEditeList.cancel;
                 skipButton.addEventListener('click', () => {
-            		console.log('canceled');
                     resolve(null);
                     destroyPopup(popupEditeList);
                     // show scroll bar
@@ -363,10 +352,8 @@ const editBirthdayPopup = (id) => {
             }
 
             if(popupEditeList.close) {
-            	console.log(popupEditeList.close);
                 const closeButton = popupEditeList.close;
                 closeButton.addEventListener('click', () => {
-            		console.log('closed');
                     resolve(null);
                     destroyPopup(popupEditeList);
                     resetScrollBar();
@@ -388,7 +375,6 @@ const editBirthdayPopup = (id) => {
             }, { once: true });
         resolve(document.body.appendChild(popupEditeList));
         popupEditeList.classList.add('open');
-        console.log("birthday date",birthdayToEdit.birthday)
         
     });
     };
@@ -414,7 +400,6 @@ const editBirthdayPopup = (id) => {
     
             if(popupDeleteList.cancel) {
                 const skipButton = popupDeleteList.cancel;
-                console.log(skipButton);
                 skipButton.addEventListener('click', () => {
                     resolve(null);
                     destroyPopup(popupDeleteList);
@@ -425,7 +410,6 @@ const editBirthdayPopup = (id) => {
 
             if(popupDeleteList.close) {
                 const closeButton = popupDeleteList.close;
-                console.log(closeButton);
                 closeButton.addEventListener('click', () => {
                     resolve(null);
                     destroyPopup(popupDeleteList);
@@ -433,18 +417,15 @@ const editBirthdayPopup = (id) => {
                 }, { once: true });
     
             }
-
             popupDeleteList.addEventListener('click', (e) => {
                 e.preventDefault();
                 if(e.target.closest('button.confirmed')) {
                 let deletePersonBirthday = persons.filter(person => person.id != id);
                 persons = deletePersonBirthday;
-                console.log(deletePersonBirthday);
                 sortedPeople.splice();
                 updateLocalPerson(deletePersonBirthday);
                 displayList(deletePersonBirthday);
                 destroyPopup(popupDeleteList);
-                console.log(sortedPeople);
                 }
                 resetScrollBar();
             }, { once: true });
@@ -464,7 +445,7 @@ const editBirthdayPopup = (id) => {
     }
 
     window.addEventListener('click', handleAddBirthday);
-    displayList(persons);
+    displayList(sortedPeople);
     window.addEventListener('click', editBirthday);
     window.addEventListener('click', deleteBirthday);
     searchInput.addEventListener('input', filterByNameAndMonth);
@@ -475,9 +456,11 @@ const editBirthdayPopup = (id) => {
 
 // save to local storage
 function initLocalStorage() {
-    const saveBirtdayList = JSON.parse(localStorage.getItem('persons'));
+    const saveBirtdayList = JSON.parse(localStorage.getItem('persons'))
     if(saveBirtdayList) {
         persons = saveBirtdayList;
+        displayPeople(persons);
+    } else {
         displayPeople(persons);
     }
     triggerLocalStoragerUpdate();
@@ -489,7 +472,7 @@ function triggerLocalStoragerUpdate() {
 function updateLocalPerson(newPersons) {
     localStorage.setItem('persons',JSON.stringify(newPersons));
 }
-//update the local storage when there is any change
+// update the local storage when there is any change
 function updateToLocalStorage() {
     updateLocalPerson(persons);
 }
