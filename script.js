@@ -106,10 +106,12 @@ function displayList(persons) {
 
             // take the year of today and  subtracts it with the year of when the peron was born -
             // to get how old is the person
-            
+
+            // to get how old is the person
+            // let age = today.getFullYear() - timestamp_to_date.getFullYear();
             let birthday = peopleBirthday(timestamp_to_date.getMonth()+1,timestamp_to_date.getDate());
             
-            const ageInYears = birthday === 0 ? 0 : Math.ceil(  (Date.now() - timestamp_to_date) / 365 / 24 / 60 / 60 / 1000);
+            const ageInYears = birthday === 0 ? Math.floor((Date.now() - timestamp_to_date) / 365 / 24 / 60 / 60 / 1000) : Math.ceil((Date.now() - timestamp_to_date) / 365 / 24 / 60 / 60 / 1000);
             function peopleBirthday(month, day) {
 
                 let now = new Date(),
@@ -259,13 +261,12 @@ const addBirthday = () => {
             
             // create a new object
             const newBirthdayList = {
-                birthday: +new Date(formEl.date.value),
+                birthday: formEl.date.value,
                 lastName: formEl.last.value,
                 firstName: formEl.first.value,
                 picture: formEl.picUrl.value,
                 id: Date.now(),
             };
-            console.log(newBirthdayList)
             // push the new object into the sortedPeople array object
             sortedPeople.push(newBirthdayList);
             // reset the form when that is done
@@ -461,6 +462,7 @@ function initLocalStorage() {
         persons = saveBirtdayList;
         displayPeople(persons);
     } else {
+        // display the original persons data if there is nothing in localeStorage
         displayPeople(persons);
     }
     triggerLocalStoragerUpdate();

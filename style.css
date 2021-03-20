@@ -263,6 +263,7 @@ input {
 }
 .form-inline {
 	align-items: flex-end;
+	gap: 32px;
 }
 .form-inline p {
 	font-style: normal;
@@ -271,6 +272,10 @@ input {
 	line-height: 21px;
 	text-align: left;
 	color: #094067;
+}
+
+.form-inline input {
+	max-width: unset;
 }
 
 .close {
