@@ -143,10 +143,10 @@ function displayList(persons) {
                 </span>
                 <div class="buttons">
                     <button class="edit">
-                        <img src="./images/edit.svg" width="35"/>
+                        <img class="svg_icon" src="./images/edit.svg"/>
                     </button>
                     <button class="delete">
-                        <img src="./images/delete.svg" width="35"/>
+                        <img class="svg_icon" src="./images/delete.svg"/>
                     </button>
                 </div>
             </div>
@@ -211,7 +211,7 @@ const addBirthday = () => {
             'afterbegin', 
             `<fieldset>
                 <div>
-                    <img class="close" name="close" src="./images/close.svg" alt="close popup"/>
+                    <img class="svg_icon close" name="close" src="./images/close.svg" alt="close popup"/>
                     <h2>Add a new person</h2>
                     <label>Enter first name</label>
                     <input type="text" value="" name="first">
@@ -325,7 +325,7 @@ const editBirthdayPopup = (id) => {
                 'afterbegin', 
                 `<fieldset>
                     <div>
-                        <img class="close" name="close" src="./images/close.svg" alt="close popup"/>
+                        <img class="svg_icon close" name="close" src="./images/close.svg" alt="close popup"/>
                         <h2>Edit ${birthdayToEdit.firstName} ${birthdayToEdit.lastName}</h2>
                         <label>Last name</label>
                         <input type="text" value="${birthdayToEdit.firstName}" name="lastName">
@@ -389,7 +389,7 @@ const editBirthdayPopup = (id) => {
                 'afterbegin', 
                 `<fieldset>
                     <div>
-                        <img class="close" name="close" src="./images/close.svg" alt="close popup"/>
+                        <img class="svg_icon close" name="close" src="./images/close.svg" alt="close popup"/>
                         <p>Are you sure you want to delete <strong>${birthdayToDelete.lastName}?</strong></p>
                         <div class="options-btn">
                             <button type="button" class="cancel" name="cancel">Cancel</button>

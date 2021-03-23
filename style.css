@@ -1,8 +1,10 @@
+@import url('https://fonts.googleapis.com/css?family=Rubik:200,300,400,500,bold&display=swap');
 body {
 	background: #D8EEFE;
 	font-size: 18px;
-	font-family: Poppins;
+	font-family: "Rubik";
 	margin: 16px;
+	font-weight: normal;
 }
 
 body.open {
@@ -13,7 +15,7 @@ body.open {
 body > header > form {
 	display: flex;
 	gap: 20px;
-	margin-bottom: 16px;
+	margin-bottom: 47px;
 }
 body > header > div { 
 	display: flex;
@@ -24,7 +26,7 @@ body > header > div {
 
 h1 {
 	margin: 0;
-	font-family: Poppins;
+	font-family: Rubik;
 	font-style: normal;
 	font-weight: bold;
 	font-size: 2.5rem;
@@ -76,25 +78,34 @@ h1 {
 	background: #FFFFFE;
 	border-radius: 5px;
 	display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-	padding: 2% 5%;
+	flex-direction: column;
+	padding-block-start: 22px;
+	padding-block-end: 22px;
+	padding-inline-start: 43px;
+	padding-inline-end: 25px;
 	gap: 16px;
 	margin-bottom: 32px;
 } 
 
+.card_item:last-of-type {
+	margin-bottom: 0;
+}
+
 .item_fig {
 	margin: 0;
+	margin-inline-end: 39px;
 }
 
 
 .item_fig img {
-	width: 100px;
+	width: 92px;
+	height: 94px;
 	border-radius: 5px;
 }
 
-
+.item_row:first-of-type {
+	margin-inline-end: auto;
+}
 
 button {
     border: none;
@@ -137,8 +148,18 @@ button {
 	font-weight: 500;
 	font-size: 18px;
 	line-height: normal;
-
 	color: #5F6C7B;
+}
+
+.upcoming_birthday button {
+	padding: 0;
+	outline: none;
+	opacity: .8;
+	transition: all .01s;
+}
+
+.upcoming_birthday button:hover {
+	opacity: 1;
 }
 
 .name {
@@ -149,6 +170,12 @@ button {
 	color: #000000;
 
 }
+
+.svg_icon {
+	width: 23px;
+	height: 23px;
+}
+
 
 .turning_age {
 	font-weight: 500;
@@ -241,7 +268,10 @@ input {
 	font-size: 16px;
 	color: #094067;
 	border-radius: 5px;
+}
+.popup input {
 	max-width: 80%;
+	margin-bottom: 11px;
 }
 .popup strong {
 	font-size: 20px;
@@ -258,12 +288,16 @@ input {
 
 .buttons {
 	display: flex;
-	justify-content: flex-end;
+	justify-content: flex-start;
 	gap: 16px;
 }
 .form-inline {
 	align-items: flex-end;
-	gap: 32px;
+	gap: 35px;
+}
+.form-inline > div {
+	max-width: 100%;
+    min-width: 100%;
 }
 .form-inline p {
 	font-style: normal;
@@ -272,24 +306,26 @@ input {
 	line-height: 21px;
 	text-align: left;
 	color: #094067;
+	margin-bottom: 13px;
 }
 
-.form-inline input {
-	max-width: unset;
+.form-inline input, .form-inline select {
+	max-width: 100%;
+    min-width: 100%;
 }
 
 .close {
-	width: 30px;
-	height: 30px;
 	align-self: flex-end;
 	cursor: pointer;
 }
 
 @media (min-width: 779px) {
 	body {
-		max-width: 70%;
-		min-width: 70%;
+		max-width: 779px;
+		min-width: 779px;
 		margin: auto;
+		margin-top: 63px;
+		margin-bottom: 63px;
 	}
 
 	h1 {
@@ -297,8 +333,13 @@ input {
 		line-height: 76px;
 	}
 
+	.form-inline > div {
+		max-width: unset;
+		min-width: unset;
+	}
+
 	.popup fieldset {
-		width: 70%;
+		width: 779px;
 	}
 
 	.popup fieldset > div {
@@ -307,9 +348,22 @@ input {
 		margin-top: 60px;
 		margin-bottom: 60px;
 	}
+
+	.card_item {
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+		/* flex-wrap: wrap; */
+	}
+	.upcoming_birthday {
+		gap: 38px;
+	}
 	.upcoming_birthday > span {
 		font-size: 24px;
 		line-height: 28px;
+	}
+	.buttons {
+		justify-content: flex-end;
 	}
 	.name {
 		font-size: 36px;
