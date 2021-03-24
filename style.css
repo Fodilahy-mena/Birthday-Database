@@ -287,14 +287,14 @@ input {
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
-	background: url(./images/down_arrow.svg) white no-repeat calc(100% - 21px) !important;
+	background: url(./images/down_arrow.svg) #FFFFFE no-repeat calc(100% - 21px) !important;
 	padding-inline-end: 3rem;
 }
 .select > option {
-	font-weight: bold !important;
-	color: #fff !important;
-	background: #EF4565 !important;
+	color: #D8EEFE !important;
+	background: #094067 !important;
 }
+
 .buttons {
 	display: flex;
 	justify-content: flex-start;
