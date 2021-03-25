@@ -42,7 +42,7 @@ async function go() {
     
 async function displayPeople() {
 
-const sortedPeople = persons.sort((a, b) => {
+    const sortedPeople = persons.sort((a, b) => {
     function peopleBirthday(month, day) {
 
         let now = new Date(),
@@ -62,9 +62,7 @@ const sortedPeople = persons.sort((a, b) => {
 // Search input
     const searchInput = document.querySelector('.search');
     const selectInput = document.querySelector(".select");
-    const resetFilterButton = document.querySelector('.reset-filters');
-
-
+    
     // create a displayLyst function to display the data frome the people.json
 function displayList(persons) {
     
@@ -106,10 +104,10 @@ function displayList(persons) {
 
             // take the year of today and  subtracts it with the year of when the peron was born -
             // to get how old is the person
-
+            
             // to get how old is the person
             // let age = today.getFullYear() - timestamp_to_date.getFullYear();
-            let birthday = peopleBirthday(timestamp_to_date.getMonth()+1,timestamp_to_date.getDate());
+            let birthday = peopleBirthday(timestamp_to_date.getMonth() + 1,timestamp_to_date.getDate());
             
             const ageInYears = birthday === 0 ? Math.floor((Date.now() - timestamp_to_date) / 365 / 24 / 60 / 60 / 1000) : Math.ceil((Date.now() - timestamp_to_date) / 365 / 24 / 60 / 60 / 1000);
             function peopleBirthday(month, day) {
@@ -166,29 +164,17 @@ const handleAddBirthday = (e) => {
     }
 }
 function filterByNameAndMonth() {
-    const filteredByMonth = filterBirthdayByMonth(persons);
-    const filteredByNameAndMonth = filterBirthdayByName(filteredByMonth);
-    displayList(filteredByNameAndMonth);
-}
-
-function filterBirthdayByName(personsData) {
     // get the value of the search input
     let searchValue = searchInput.value;
     const lowerCaseValue = searchValue.toLowerCase();
+    let selectValue = selectInput.value;
+    const numberedValue = selectValue;
     // filter by either firstName or lastName and birthday month
-    return personsData.filter(person => person.lastName.toLowerCase().includes(lowerCaseValue) || person.firstName.toLowerCase().includes(lowerCaseValue));
+    const filteredByNameAndMonth = sortedPeople.filter(person => (numberedValue !== 'empty' ? new Date(person.birthday).getMonth() == numberedValue : person) && (person.firstName.toLowerCase().includes(lowerCaseValue) || person.lastName.toLowerCase().includes(lowerCaseValue)));
+    displayList(filteredByNameAndMonth);
 }
 
-function filterBirthdayByMonth(personsData) {
-    let selectValue = selectInput.value;
-    const numberedValue = Number(selectValue);
-    return personsData.filter(person => new Date(person.birthday).getMonth() === numberedValue);
-}
-function filterReset() {
-    searchInput.value = '';
-    selectInput.value = '';
-    displayList(persons);
-}
+
 // create an addBirthday function
 const addBirthday = () => {
     // take the sortedPeople variable that has been assigned
@@ -222,8 +208,8 @@ const addBirthday = () => {
                     <label>Avatar image</label>
                     <input type="text" value="" name="picUrl">
                     <div class="options-btn">
-                        <button type="button" class="cancel" name="cancel">Cancel</button>
                         <button type="submit" class="submit_form">Submit</button>
+                        <button type="button" class="cancel" name="cancel">Cancel</button>
                     </div>
                 </div>
             </fieldset>
@@ -250,9 +236,6 @@ const addBirthday = () => {
                 resetScrollBar();
             }, { once: true });
         }
-
-        // const dateInput = document.querySelector('input[type=date]').max = new Date().toISOString().slice(0,10);
-        //     console.log(dateInput);
 
         // listen for a submit button on the popup form
         popupAddList.addEventListener('submit', (e) => {
@@ -336,8 +319,8 @@ const editBirthdayPopup = (id) => {
                         <label>Avatar image</label>
                         <input type="url" value="${birthdayToEdit.picture}" name="avatarUrl">
                         <div class="options-btn">
+                            <button type="submit" class="confirmed">Save changes</button>
                             <button type="button" class="cancel" name="cancel">Cancel</button>
-                            <button type="submit" class="confirmed">Save</button>
                         </div>
                     </div>
                 </fieldset>
@@ -392,8 +375,8 @@ const editBirthdayPopup = (id) => {
                         <img class="svg_icon close" name="close" src="./images/close.svg" alt="close popup"/>
                         <p>Are you sure you want to delete <strong>${birthdayToDelete.lastName}?</strong></p>
                         <div class="options-btn">
-                            <button type="button" class="cancel" name="cancel">Cancel</button>
                             <button type="submit" name="delete" class="confirmed">OK</button>
+                            <button type="button" class="cancel" name="cancel">Cancel</button>
                         </div>
                     </div>
                 </fieldset>
@@ -451,7 +434,6 @@ const editBirthdayPopup = (id) => {
     window.addEventListener('click', deleteBirthday);
     searchInput.addEventListener('input', filterByNameAndMonth);
     selectInput.addEventListener('input', filterByNameAndMonth);
-    resetFilterButton.addEventListener('click', filterReset)
 }
 
 
