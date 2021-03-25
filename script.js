@@ -132,7 +132,7 @@ function displayList(persons) {
             </figure>
             <div class="item_row">
                 <span class="name">${person.firstName} ${person.lastName}</span><br>
-                <strong class="turning_age">Turns <span class="age">${ageInYears} year${ageInYears > 1 ? 's' : ''} old</span> ${birthday === 0 ? "today" : `on ${month} ${date}<sup>${nth(date)}`}</sup></strong>
+                <strong class="turning_age">Turns <span class="age">${ageInYears}</span> ${birthday === 0 ? "today" : `on ${month} ${date}<sup>${nth(date)}`}</sup></strong>
             </div>
             <div class="item_row upcoming_birthday">
                 <span>${birthday === 0 

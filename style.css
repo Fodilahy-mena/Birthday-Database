@@ -158,14 +158,6 @@ input {
 	color: #EF4565;
 }
 
-.days {
-	font-family: Rubik;
-	font-style: normal;
-	font-weight: bold;
-	line-height: 28px;
-	color:  #f86781;
-}
-
 .upcoming_birthday {
 	display: flex;
 	flex-direction: column;
