@@ -321,6 +321,7 @@ fieldset {
 	cursor: pointer;
 }
 
+/* From tablet */
 @media (min-width: 779px) {
 	body {
 		max-width: 779px;
@@ -354,7 +355,8 @@ fieldset {
 	.popup fieldset > div {
 		max-width: 70%;
 		margin: auto;
-		margin-top: 60px;
+		margin-right: 63px;
+		margin-top: 53px;
 		margin-bottom: 60px;
 	}
 
@@ -389,3 +391,29 @@ fieldset {
 		line-height: 28px;
 	}
 }
+
+/* On a big desktop view*/
+
+@media (min-width: 1440px) {
+	.popup fieldset {
+		width: 1079px;
+		height: 751px;
+		margin-top: 16vh;
+		margin-bottom: 11vh;
+		max-height: 73vh;
+	}
+
+	.popup fieldset > div {
+		width: 1114px;
+		margin-left: 263px;
+		margin-right: 298px;
+		margin-top: 6vh;
+		margin-bottom: 6vh;
+	}
+
+	.close {
+		position: relative;
+    	top: -12px;
+	}
+}
+

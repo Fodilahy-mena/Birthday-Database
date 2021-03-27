@@ -199,14 +199,14 @@ const addBirthday = () => {
                 <div>
                     <img class="svg_icon close" name="close" src="./images/close.svg" alt="close popup"/>
                     <h2>Add a new person</h2>
-                    <label>Enter first name</label>
-                    <input type="text" value="" name="first">
-                    <label>Enter last name</label>
-                    <input type="text" value="" name="last">
+                    <label>First name</label>
+                    <input type="text" value="" placeholder="Your first name" name="first" required>
+                    <label>Last name</label>
+                    <input type="text" placeholder="Your last name" value="" name="last" required>
                     <label>Enter your birthday date</label>
-                    <input type="date" value="" name="date" max = ${maximumDate}>
+                    <input type="date" value="" name="date" max = ${maximumDate} required>
                     <label>Avatar image</label>
-                    <input type="text" value="" name="picUrl">
+                    <input type="url" value="" placeholder="Your image url" name="picUrl" required>
                     <div class="options-btn">
                         <button type="submit" class="submit_form">Submit</button>
                         <button type="button" class="cancel" name="cancel">Cancel</button>
