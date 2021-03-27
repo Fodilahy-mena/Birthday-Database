@@ -199,9 +199,9 @@ const addBirthday = () => {
                 <div>
                     <img class="svg_icon close" name="close" src="./images/close.svg" alt="close popup"/>
                     <h2>Add a new person</h2>
-                    <label>First name</label>
+                    <label>Firstname</label>
                     <input type="text" value="" placeholder="first name" name="Firstname" required>
-                    <label>Last name</label>
+                    <label>Lastname</label>
                     <input type="text" placeholder="last name" value="" name="Lastname" required>
                     <label>Enter your birthday date</label>
                     <input type="date" value="" name="date" max = ${maximumDate} required>
@@ -310,9 +310,9 @@ const editBirthdayPopup = (id) => {
                     <div>
                         <img class="svg_icon close" name="close" src="./images/close.svg" alt="close popup"/>
                         <h2>Edit ${birthdayToEdit.firstName} ${birthdayToEdit.lastName}</h2>
-                        <label>Last name</label>
+                        <label>Firstname</label>
                         <input type="text" value="${birthdayToEdit.firstName}" name="lastName">
-                        <label>First name</label>
+                        <label>Lastname</label>
                         <input type="text" value="${birthdayToEdit.lastName}" name="firstName">
                         <label>Birthday</label>
                         <input type="date" value="${birthdayDate}" max=${maximumDate} name="birthday">
