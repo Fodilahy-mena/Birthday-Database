@@ -219,7 +219,6 @@ input {
 
 .popup fieldset {
 	padding: 0;
-	border: 2px solid whitesmoke;
 	background-color: white;
 	border-radius: 5px;
 	transition: all 0.5s;
@@ -406,7 +405,7 @@ fieldset {
 	.popup fieldset > div {
 		width: 1114px;
 		margin-left: 263px;
-		margin-right: 298px;
+		margin-right: 64px;
 		margin-top: 6vh;
 		margin-bottom: 6vh;
 	}
