@@ -199,14 +199,14 @@ const addBirthday = () => {
                 <div>
                     <img class="svg_icon close" name="close" src="./images/close.svg" alt="close popup"/>
                     <h2>Add a new person</h2>
-                    <label>Firstname</label>
-                    <input type="text" value="" placeholder="first name" name="Firstname" required>
-                    <label>Lastname</label>
-                    <input type="text" placeholder="last name" value="" name="Lastname" required>
-                    <label>Enter your birthday date</label>
-                    <input type="date" value="" name="date" max = ${maximumDate} required>
-                    <label>Avatar image</label>
-                    <input type="url" value="" placeholder="Your image url" name="url" required>
+                    <label for="Firstname">Firstname</label>
+                    <input type="text" name="Firstname" id="Firstname" value="" placeholder="first name" required>
+                    <label for="Lastname">Lastname</label>
+                    <input type="text" name="Lastname" id="Lastname" value="" placeholder="last name" required>
+                    <label for="Birthday">Birthday</label>
+                    <input type="date" name="Birthday" id="Birthday" value="" max= ${maximumDate} required>
+                    <label for="url">Avatar image</label>
+                    <input type="url" name="url" id="url" value="" placeholder="Your image url" required>
                     <div class="options-btn">
                         <button type="submit" name="submit" class="submit_form">Submit</button>
                         <button type="button" class="cancel" name="cancel">Cancel</button>
@@ -244,7 +244,7 @@ const addBirthday = () => {
             
             // create a new object
             const newBirthdayList = {
-                birthday: formEl.date.value,
+                birthday: formEl.Birthday.value,
                 lastName: formEl.Lastname.value,
                 firstName: formEl.Firstname.value,
                 picture: formEl.url.value,
@@ -310,16 +310,16 @@ const editBirthdayPopup = (id) => {
                     <div>
                         <img class="svg_icon close" name="close" src="./images/close.svg" alt="close popup"/>
                         <h2>Edit ${birthdayToEdit.firstName} ${birthdayToEdit.lastName}</h2>
-                        <label>Firstname</label>
-                        <input type="text" value="${birthdayToEdit.firstName}" name="lastName">
-                        <label>Lastname</label>
-                        <input type="text" value="${birthdayToEdit.lastName}" name="firstName">
-                        <label>Birthday</label>
-                        <input type="date" value="${birthdayDate}" max=${maximumDate} name="birthday">
-                        <label>Avatar image</label>
-                        <input type="url" value="${birthdayToEdit.picture}" name="avatarUrl">
+                        <label for="Firstname">Firstname</label>
+                        <input type="text" name="Firstname" id="Firstname" value="${birthdayToEdit.firstName}">
+                        <label for="Lastname">Lastname</label>
+                        <input type="text"  name="Lastname" id="Lastname" value="${birthdayToEdit.lastName}">
+                        <label for="Birthday">Birthday</label>
+                        <input type="date" name="Birthday" id="Birthday" value="${birthdayDate}" max=${maximumDate}>
+                        <label for="Avatarurl">Avatar image</label>
+                        <input type="url" name="Avatarurl" id="Avatarurl" value="${birthdayToEdit.picture}">
                         <div class="options-btn">
-                            <button type="submit" class="confirmed">Save changes</button>
+                            <button type="submit" name="submit" class="confirmed">Save changes</button>
                             <button type="button" class="cancel" name="cancel">Cancel</button>
                         </div>
                     </div>
@@ -346,10 +346,10 @@ const editBirthdayPopup = (id) => {
 
             popupEditeList.addEventListener('submit', (e) => {
             	e.preventDefault();
-                birthdayToEdit.lastName = popupEditeList.lastName.value;
-                birthdayToEdit.firstName = popupEditeList.firstName.value;
-                birthdayToEdit.birthday = popupEditeList.birthday.value;
-                birthdayToEdit.picture = popupEditeList.avatarUrl.value;
+                birthdayToEdit.lastName = popupEditeList.Lastname.value;
+                birthdayToEdit.firstName = popupEditeList.Firstname.value;
+                birthdayToEdit.birthday = popupEditeList.Birthday.value;
+                birthdayToEdit.picture = popupEditeList.Avatarurl.value;
             	displayList(sortedPeople);
                 resolve(e.currentTarget.remove());
             	destroyPopup(popupEditeList);
