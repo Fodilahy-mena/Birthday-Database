@@ -200,9 +200,9 @@ const addBirthday = () => {
                     <img class="svg_icon close" name="close" src="./images/close.svg" alt="close popup"/>
                     <h2>Add a new person</h2>
                     <label>First name</label>
-                    <input type="text" value="" placeholder="Your first name" name="Firstname" required>
+                    <input type="text" value="" placeholder="first name" name="Firstname" required>
                     <label>Last name</label>
-                    <input type="text" placeholder="Your last name" value="" name="Lastname" required>
+                    <input type="text" placeholder="last name" value="" name="Lastname" required>
                     <label>Enter your birthday date</label>
                     <input type="date" value="" name="date" max = ${maximumDate} required>
                     <label>Avatar image</label>
