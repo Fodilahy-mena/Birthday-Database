@@ -231,6 +231,37 @@ input {
 	margin: 2rem;
 }
 
+.popup label {
+	font-weight: 500;
+	font-size: 18px;
+	color: #094067;
+}
+
+.popup ::placeholder {
+	font-weight: 500;
+	font-size: 18px;
+	color: #094067;
+  }
+
+.popup input {
+	content: attr(value);
+	font-weight: 500;
+	font-size: 18px;
+	color: #094067;
+}
+
+#Birthday {
+	content: attr(value);
+	font-weight: 500;
+	font-size: 18px;
+	color: #094067;
+}
+
+#Birthday:focus::before,
+#Birthday:valid::before {
+	display: none;
+}
+
 .popup.open {
 	opacity: 1;
 	pointer-events: all;
@@ -300,7 +331,7 @@ fieldset {
 	max-width: 100%;
     min-width: 100%;
 }
-.form-inline p {
+.form-inline label {
 	font-style: normal;
 	font-weight: 500;
 	font-size: 18px;
@@ -334,6 +365,12 @@ fieldset {
 		font-size: 64px;
 		line-height: 76px;
 	}
+
+	h2 {
+		font-weight: 500;
+		font-size: 48px;
+	}
+	
 	/* Heaer form */
 
 	.form-inline {

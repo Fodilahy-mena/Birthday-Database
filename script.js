@@ -204,7 +204,7 @@ const addBirthday = () => {
                     <label for="Lastname">Lastname</label>
                     <input type="text" name="Lastname" id="Lastname" value="" placeholder="last name" required>
                     <label for="Birthday">Birthday</label>
-                    <input type="date" name="Birthday" id="Birthday" value="" max= ${maximumDate} required>
+                    <input type="date" name="Birthday" id="Birthday" placeholder="mm/dd/yyyy" value="" max= ${maximumDate} required>
                     <label for="url">Avatar image</label>
                     <input type="url" name="url" id="url" value="" placeholder="Your image url" required>
                     <div class="options-btn">

@@ -2,19 +2,17 @@
 
 This was our final project about vanilla JS which is a birthday list.
 
-We given a list of persons. The app will show whose person is the closest to have their birthday.
+As a class, we were given a list of people to render in the app. The app sorts the list according to the people's closest birthday.
 
-There is a file in the project called person.json. It contains a list of persons, and we want to add all those persons to the birthday list app.
+There is a file in the project called person.json which contains a list of people, and we want to add all those people to the birthday list app.
 
-The first time I launch the app, it should fetch all the data from the people.json local file. I can use fetch for that, it also works with local files.
+The first time the app is launched, it fetches all the data from the people.json local file.
 
-Once they are loaded in the app, I can save them on localstorage, and I don't need to work with the json file anymore.
-
-The app will show the list of people, sorted by the ones who will have their birthday the soonest.
+Once the data is loaded in the app, it is saved on localstorage, and there is no need to work with the json file anymore.
 
 ## Demo of the result
-![images/screenshot_demo.png](images/screenshot_demo.png)
 
+![images/screenshot.png](images/screenshot.png)
 
 The users will be able to add a new element on the list (only on the app list localstorage, not on the json). Here are the fields :
 
@@ -24,39 +22,18 @@ The users will be able to add a new element on the list (only on the app list lo
 -   an url for their avatar image
 -   an id for handling the operations on the objects. (no need to add that on the form)
 
-The users should be able to edit an element on the list. When user clicks the edit button, a modal should appear with a form inside, to edit any attribute.
+The users are able to edit an element on the list. When user clicks the edit button, a modal appears with a form inside, to edit any attribute.
 
-The users should be able to delete an element. There will be a modal that will ask if user is sure to delete the element.
+The users can delete an element. There will be a modal that will ask if user is sure to delete the element.
 
-Every action should be persisted into the local storage.
+Every action is persisted into the local storage.
 
-Here is the package used for handling date computations. Add it as a dependency of your project
+A package for handling date computations. Added as a dependency of this project.
 
 [https://date-fns.org/v1.29.0/docs/differenceInYears](https://date-fns.org/v1.29.0/docs/differenceInYears)
 
-### Structure
+## Used tech stack
 
-- An async function from line 9 to line 18 is a destroy popup fuction which is called when users want to skip form popup.
-- go() async function is set in order to fetche all data from `people.json` using await. This function also wraps all functions that will be datailed below. Some of functions that are in it have nested functions. Basically, it is devided into three parts. The first function which is `displayPeople()` function has something to do with *displaying the data from fetched `people.json`*, *adding people to the data*, *deleting people from the data and ediditing*. The second and the third functions have something to do with initializing and updating the data to the localstorage.
-
-First of all I will be going a little bit more about the `displayPeople()` function which has the most of the main idea about this project.
-
-1. Inside the `handleAddBirthday()` function, I utilized a `e.target.closest()` methode to check if a user click on a button that has an `add` class and if that is true, apply this `addBirthday()`. Then listen for a click event on the window to handle this `handleAddBirthday()` function in line 335. 
-    1. In the `addBirthday()` function, there is a form inputs that require some values from the user and push taht values to the fetched `people.json` if the user submit the form. Otherwise it dosen't do anything when user click on cancel button but destroying the form - form that behaves like a prompt.
-2. This `displayList` function is displaying the data from fetched `people.json` to html file. A map() methode is used here to access each component of each person to a list. But in my case I used table rows instead of list items - just a matter of html and css prefference. 
-    1. Since date.fns is not really accessible for me, I used js new Date() trick to get the how old the person is and how many days left before their upcoming birthday. It does a little bit with it but it is right.
-
-3. The `editBirthdayPopup()` is a edit popup form for the user to be able to convert their info from the birthday app. For example, changing their birthday date, First name, Last name, Avatar picture because sometimes there could be any misspelling or wrong date when entering them. Then the user can click on save button to submit their changes to the list if they are happy with it.
-
-4. An other function is `deleteBirthdayPopup()` which basically a popup form for confirmation - making sure that the user really decides to delete a person from the list after clicking on delete button.  
-
-
-### Experience
-
-- What I learned was that I can not access anything from displayed html - deleting, editing them unless I pass the function that holds it to the function where to delete and edite things.
-
-### Challenges
-
-The most challenging part was to get each items's turning age, calculating the number of days left before upcoming birthday and sort the list according to that. 
-
-
+- [HTML5](http://html5doctor.com/)
+- [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)
+- [Vanilla Javascript](http://vanilla-js.com/)
