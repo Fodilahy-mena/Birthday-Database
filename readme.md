@@ -1,4 +1,4 @@
-# Term 3 JS Project : Birthday App
+# Birthday Database
 
 This was our final project about vanilla JS which is a birthday list.
 
