@@ -1,26 +1,27 @@
 # Birthday Database
 
-This was our final project about vanilla JS which is a birthday list.
+Vanilla JS project that renders a birthday list.
 
-As a class, we were given a list of people to render in the app. The app sorts the list according to the people's closest birthday.
+The app sorts the list according to the people's closest birthday.
 
-There is a file in the project called person.json which contains a list of people, and we want to add all those people to the birthday list app.
+There is a file in the project called person.json which contains a list of people.
 
 The first time the app is launched, it fetches all the data from the people.json local file.
 
-Once the data is loaded in the app, it is saved on localstorage, and there is no need to work with the json file anymore.
+Once the data is loaded in the app, it is saved on localstorage.
 
 ## Demo of the result
 
 ![images/screenshot.png](images/screenshot.png)
 
-The users will be able to add a new element on the list (only on the app list localstorage, not on the json). Here are the fields :
+The users are able to add a new element on the list (only on the app list localstorage, not on the json). 
+The Required input fields for a new element are:
 
 -   first name
 -   last name
 -   birthday
 -   an url for their avatar image
--   an id for handling the operations on the objects. (no need to add that on the form)
+-   an id for handling the operations on the objects.
 
 The users are able to edit an element on the list. When user clicks the edit button, a modal appears with a form inside, to edit any attribute.
 
